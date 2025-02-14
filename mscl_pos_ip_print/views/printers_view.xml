@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="custom_printer_view_tree" model="ir.ui.view">
+        <field name="name">custom_printer.view.tree</field>
+        <field name="model">custom.printer</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="ip_address"/>
+                <field name="company_id"/>
+                <field name="active" widget="boolean_toggle"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="custom_printer_view_form" model="ir.ui.view">
+        <field name="name">custom_printer.view.form</field>
+        <field name="model">custom.printer</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="ip_address"/>
+                        <field name="company_id"/>
+                        <field name="active" widget="boolean_toggle"/>
+                    </group>
+                    <group>
+                    </group>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="custom_printer_action">
+        <field name="name">Printer Action</field>
+        <field name="res_model">custom.printer</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">['|', ('active', '=', True), ('active', '=', False)]</field>
+        <field name="help" type="html">
+           <p class="o_view_nocontent_smiling_face">
+              No active printers
+           </p>
+        </field>
+    </record>
+    <menuitem id="custom_printer_menu_action" name="Custom Printers"  parent="point_of_sale.menu_point_config_product"
+              action="custom_printer_action" sequence="5"/>
+</odoo>

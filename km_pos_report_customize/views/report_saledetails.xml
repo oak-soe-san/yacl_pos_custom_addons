@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="km_pos_report_customize.report_saledetails" inherit_id="point_of_sale.report_saledetails">
+        <xpath expr="//div[@class='page']/table[1]" position="replace">
+            <table  class="table table-sm">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Price Unit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr t-foreach='products' t-as='line'>
+                        <t t-if='line["is_pack"] == False'>
+
+                            <t t-set="internal_reference" t-value="line['code'] and '[%s] ' % line['code'] or ''" />
+                            <td><t t-esc="internal_reference" /><t t-esc="line['product_name']" /></td>
+                            <td>
+                                <t t-esc="line['quantity']" />
+                                <t t-if='line["uom"] != "Units"'>
+                                    <t t-esc='line["uom"]' /> 
+                                </t>
+                            </td>
+                            <td>
+                                <t t-esc='line["price_unit"]' />
+                                <t t-if='line["discount"] != 0'>
+                                    Disc: <t t-esc='line["discount"]' />%
+                                </t>
+                            </td>
+
+                        </t>
+                    </tr>
+                </tbody>
+            </table>
+            <br />
+            
+            <h3>Combos</h3>
+            <table  class="table table-sm">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Price Unit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr t-foreach='products' t-as='line'>
+                        <t t-if='line["is_pack"]'>
+                            <t t-set="internal_reference" t-value="line['code'] and '[%s] ' % line['code'] or ''" />
+                            <td><t t-esc="internal_reference" /><t t-esc="line['product_name']" /></td>
+                            <td>
+                                <t t-esc="line['quantity']" />
+                                <t t-if='line["uom"] != "Units"'>
+                                    <t t-esc='line["uom"]' /> 
+                                </t>
+                            </td>
+                            <td>
+                                <t t-esc='line["price_unit"]' />
+                            <t t-if='line["discount"] != 0'>
+                                Disc: <t t-esc='line["discount"]' />%
+                            </t>
+                            </td>
+                        </t>
+
+                    </tr>
+                </tbody>
+            </table>
+
+        </xpath>
+    </template>
+</odoo>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- POS REPORT WIZARD VIEW -->
+    <record model="ir.ui.view" id="pos_payment_report_form_view">
+        <field name="name">POS Payment Report</field>
+        <field name="model">pos.payment.report.wizard</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <group>
+                    <group>
+                        <field name="start_date" />
+                        <field name="end_date" />
+                        <field name="payment_methods" widget="many2many_tags" />
+                    </group>
+                    <group>
+                        <field name="company_ids" widget="many2many_tags" />
+                        <field name="pos_config_ids" widget="many2many_tags" />
+                        <field name="cashier_users" widget="many2many_tags" />
+                    </group>
+                </group>
+                <footer>
+                    <!-- <button string="PDF Report" name="pos_payment_report_pdf" type="object"
+                    class="oe_highlight"/> -->
+                    <button string="Print Excel" name="pos_payment_report_excel" type="object"
+                        class="oe_highlight" /> or <button string="Cancel" class="oe_link"
+                        special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- FORM VIEW OF FINAL EXCEL REPORT -->
+    <record id="view_pos_payment_excel_report_form" model="ir.ui.view">
+        <field name="name">pos.payment.excel.report.form</field>
+        <field name="model">pos.payment.excel.report</field>
+        <field name="arch" type="xml">
+            <form>
+                <b>
+                    <h4>Click on the report file name to download the excel file.</h4>
+                </b>
+                <br />
+                <group>
+                    <field name="excel_file" readonly="1" filename="file_name" />
+                    <field name="file_name" invisible="1" />
+                </group>
+                <footer>
+                    <button string="Close" class="btn-secondary" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+    <!--POS
+    REPORT MENU ACTION -->
+    <record id="action_pos_payment_report_menu" model="ir.actions.act_window">
+        <field name="name">POS Payment Report</field>
+        <field name="res_model">pos.payment.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <!-- POS REPORT MENU -->
+    <menuitem
+        id="pos_payment_report_menu"
+        name="POS Payment Report"
+        action="action_pos_payment_report_menu"
+        parent="point_of_sale.menu_point_rep"
+        sequence="4" />
+</odoo>

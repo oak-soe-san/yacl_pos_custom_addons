@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Shift Report Template -->
+    <template id="pos_management_system.shift_report_template">
+
+        <t t-call="web.html_container">
+            <t t-call="web.html_container">
+                <div class="page">
+                    <div class="oe_structure">
+                        <div align="center"
+                            style="border:1px solid black;margin:0 auto;padding:0 auto;font-size:18px">
+                            <strong>Shift Report</strong>
+                        </div>
+                        <br />
+                        <t t-foreach="pos_orders['datas']" t-as="data">
+                            <table style="width:100%;margin-top:15px;">
+                                <tr>
+                                    <td class="text-left">
+                                        Report On
+                                    </td>
+                                    <td align="right">
+                                        <span t-esc="data['current_date_time']" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-left">
+                                        Saleperson
+                                    </td>
+                                    <td align="right">
+                                        <span t-esc="user_id" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-left">
+                                        Session
+                                    </td>
+                                    <td align="right">
+                                        <t t-foreach="data['session_ids']" t-as="session">
+                                            <t t-if="len(data['session_ids']) > 1">
+                                                <span t-esc="session['name']" />
+                                                <span>,</span>
+                                            </t>
+                                            <t t-else="">
+                                                <span t-esc="session['name']" />
+                                            </t>
+                                        </t>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-left">
+                                        POS
+                                    </td>
+                                    <td align="right">
+                                        <t t-foreach="data['session_ids']" t-as="session">
+                                            <t t-if="len(data['session_ids']) > 1">
+                                                <span t-esc="session['pos_name']" />
+                                                <span>,</span>
+                                            </t>
+                                            <t t-else="">
+                                                <span t-esc="session['pos_name']" />
+                                            </t>
+                                        </t>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-left">
+                                        Start Date
+                                    </td>
+                                    <td align="right">
+                                        <t t-foreach="data['session_ids']" t-as="session">
+                                            <t t-if="len(data['session_ids']) > 1">
+                                                <span t-esc="session['start_date']" />
+                                                <span>,</span>
+                                            </t>
+                                            <t t-else="">
+                                                <span t-esc="session['start_date']" />
+                                            </t>
+                                        </t>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-left">
+                                        End Date
+                                    </td>
+                                    <td align="right">
+                                        <t t-foreach="data['session_ids']" t-as="session">
+                                            <t t-if="len(data['session_ids']) > 1">
+                                                <span t-esc="session['end_date']" />
+                                                <span>,</span>
+                                            </t>
+                                            <t t-else="">
+                                                <span t-esc="session['end_date']" />
+                                            </t>
+                                        </t>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-left">
+                                        Guest Count
+                                    </td>
+                                    <td align="right">
+                                        <span t-esc="data['guest_count']" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-left">
+                                        Order Count
+                                    </td>
+                                    <td align="right">
+                                        <span t-esc="data['order_count']" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-left">
+                                        Total
+                                    </td>
+                                    <td align="right">
+                                        <span
+                                            t-esc="data['total_gross_amount']"
+                                            t-options='{"widget": "float", "precision": 2}' />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-left">
+                                        Net Total
+                                    </td>
+                                    <td align="right">
+                                        <span
+                                            t-esc="data['total_net_amount']"
+                                            t-options='{"widget": "float", "precision": 2}' />
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <div align="center" style="margin-top:10px !important;">
+                                <strong> Payment Detail </strong>
+                            </div>
+                            <table style="width:100%;margin-top:15px;">
+                                <t t-set="total" t-value="0" />
+                                <t t-set="qty_payment_method" t-value="0" />
+                                <tr>
+                                    <td style="width:50%; border-bottom:1pt dotted black;">
+                                        Method
+                                    </td>
+                                    <td align="center"
+                                        style="width:20%; border-bottom:1pt dotted black;">
+                                        Qty
+                                    </td>
+                                    <td align="right"
+                                        style="width:30%; border-bottom:1pt dotted black;">
+                                        Amount
+                                    </td>
+                                </tr>
+                                <tr t-foreach="data['payment_data']" t-as="l">
+                                    <td class="text-left">
+                                        <span t-esc="l['name']" />
+                                    </td>
+                                    <td align="center">
+                                        <span t-esc="l['count']" />
+                                    </td>
+                                    <!-- <td align="right">
+                                        <span t-esc="l['total']"
+                                            t-options="{'widget': 'monetary', 'display_currency': o.currency_id}" />
+                                        <t t-set="total" t-value="total + l['total']" />
+                                    </td> -->
+                                    <td align="right">
+                                        <span t-esc="l['total']"
+                                            t-options='{"widget": "float", "precision": 2}' />
+                                        <t t-set="total" t-value="total + l['total']" />
+                                    </td>
+                                </tr>
+                            </table>
+                            <table style="width:100%;">
+                                <tr>
+                                    <td style="width:50%;"></td>
+                                    <td align="right" style="width:50%;">
+                                        -------------------------------
+                                    </td>
+                                </tr>
+                            </table>
+                            <table style="width:100%">
+                                <tr>
+                                    <td style="width:50%;" class="text-left">
+                                        Total
+                                    </td>
+                                    <!-- <td align="right" style="width:30%;">
+                                        <span t-esc="total"
+                                            t-options="{'widget': 'monetary', 'display_currency': o.currency_id}" />
+                                    </td> -->
+                                    <td align="right" style="width:30%;">
+                                        <span t-esc="total"
+                                            t-options='{"widget": "float", "precision": 2}' />
+                                    </td>
+                                </tr>
+                            </table>
+
+
+                            <!-- TAXES -->
+                            <t t-set="tax_total" t-value="0" />
+                            <div align="center" style="margin-top:10px !important;">
+                                <strong> Taxes Detail</strong>
+                            </div>
+                            <table style="width:100%;margin-top:15px;">
+                                <tr>
+                                    <td style="width:60%; border-bottom:1pt dotted black;">
+                                        Tax
+                                    </td>
+                                    <td align="right"
+                                        style="width:40%; border-bottom:1pt dotted black;">
+                                        Amount
+                                    </td>
+                                </tr>
+                                <tr t-foreach="data['tax_data']" t-as="pl">
+                                    <t t-set="tax_total" t-value="tax_total + pl['amount']" />
+                                    <td class="text-left">
+                                        <span t-esc="pl['name']" />
+                                    </td>
+                                    <td align="right">
+                                        <span t-esc="pl['amount']"
+                                            t-options='{"widget": "float", "precision": 2}' />
+                                    </td>
+                                </tr>
+                            </table>
+                            <table style="width:100%;">
+                                <tr>
+                                    <td style="width:50%;"></td>
+                                    <td align="right" style="width:50%;">
+                                        -------------------------------
+                                    </td>
+                                </tr>
+                            </table>
+                            <table style="width:100%">
+                                <tr>
+                                    <td style="width:50%;" class="text-left">
+                                        Total
+                                    </td>
+                                    <td align="right" style="width:30%;">
+                                        <span t-esc="tax_total"
+                                            t-options='{"widget": "float", "precision": 2}' />
+                                    </td>
+                                </tr>
+                            </table>
+                            <!-- END TAXES -->
+
+                            <!-- My Custom Flexible Wise Sale - Start -->
+                            <t t-set="product_total" t-value="0" />
+                            <div align="center" style="margin-top:10px !important;">
+
+                                <strong>Channel Wise Sales</strong>
+
+                            </div>
+                            <table style="width:100%;margin-top:15px;">
+                                <tr>
+                                    <td style="width:50%; border-bottom:1pt dotted black;">
+                                        Channel
+                                    </td>
+                                    <td align="center"
+                                        style="width:20%; border-bottom:1pt dotted black;">
+                                        Qty
+                                    </td>
+                                    <td align="right"
+                                        style="width:30%; border-bottom:1pt dotted black;">
+                                        Amount
+                                    </td>
+                                </tr>
+                                <tr t-foreach="data['flexible_tax_data']['products_sold'].items()"
+                                    t-as="tax">
+                                    <t t-set="product_total"
+                                        t-value="product_total + tax[1]['qty']" />
+                                    <td class="text-left">
+                                        <t t-if="tax == 'undefine'">
+                                            Discount/Others
+                                        </t>
+                                        <t t-else="">
+                                            <span t-esc="tax[0]" />
+                                        </t>
+
+                                    </td>
+                                    <td align="center">
+                                        <span t-esc="tax[1]['qty']" />
+                                    </td>
+                                    <td align="right">
+                                        <span
+                                            t-esc="tax[1]['amount']"
+                                            t-options='{"widget": "float", "precision": 2}' />
+                                    </td>
+                                </tr>
+                            </table>
+                            <table style="width:100%;">
+                                <tr>
+                                    <td style="width:50%;">
+                                    </td>
+                                    <td style="width:50%; !important" align="right">
+                                        --------------
+                                    </td>
+                                </tr>
+                            </table>
+                            <table style="width:100%">
+                                <tr>
+                                    <td style="width:50% ;" class="text-left">
+                                        Total Items
+                                    </td>
+                                    <td style="width:50%; !important" align="right">
+                                        <span t-esc="product_total" />
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- My Custom Discount Wise Sale - End -->
+                        </t>
+                    </div>
+                </div>
+            </t>
+        </t>
+
+    </template>
+
+</odoo>

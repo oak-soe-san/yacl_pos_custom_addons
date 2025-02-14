@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="yacl_pos_product_category_inherit_view_id" model="ir.ui.view">
+        <field name="name">yacl.pos.product.category.inherit.view.id</field>
+        <field name="model">pos.category</field>
+        <field name="inherit_id" ref="point_of_sale.product_pos_category_form_view" />
+        <field name="arch" type="xml">
+            <field name="sequence" position="after">
+                <field name="company_id" groups="base.group_multi_company"
+                    options="{'no_create': True}" />
+            </field>
+        </field>
+    </record>
+
+    <record id="yacl_pos_bill_inherit_view_id" model="ir.ui.view">
+        <field name="name">yacl.pos.bill.inherit.view.id</field>
+        <field name="model">pos.bill</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_bill_form" />
+        <field name="arch" type="xml">
+            <field name="pos_config_ids" position="after">
+                <field name="company_id" groups="base.group_multi_company"
+                    options="{'no_create': True}" />
+            </field>
+        </field>
+    </record>
+
+    <record id="yacl_pos_floor_inherit_view_id" model="ir.ui.view">
+        <field name="name">yacl.pos.floor.inherit.view.id</field>
+        <field name="model">restaurant.floor</field>
+        <field name="inherit_id" ref="pos_restaurant.view_restaurant_floor_form" />
+        <field name="arch" type="xml">
+            <field name="background_color" position="after">
+                <field name="company_id" groups="base.group_multi_company"
+                    options="{'no_create': True}" />
+            </field>
+        </field>
+    </record>
+
+    <record id="yacl_pos_attributes_inherit_view_id" model="ir.ui.view">
+        <field name="name">yacl.pos.attributes.inherit.view.id</field>
+        <field name="model">product.attribute</field>
+        <field name="inherit_id" ref="product.product_attribute_view_form" />
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="company_id" groups="base.group_multi_company"
+                    options="{'no_create': True}" />
+            </field>
+        </field>
+    </record>
+
+    <record id="yacl_pos_printer_inherit_view_id" model="ir.ui.view">
+        <field name="name">yacl.pos.printer.inherit.view.id</field>
+        <field name="model">restaurant.printer</field>
+        <field name="inherit_id" ref="pos_restaurant.view_restaurant_printer_form" />
+        <field name="arch" type="xml">
+            <field name="proxy_ip" position="after">
+                <field name="company_id" groups="base.group_multi_company"
+                    options="{'no_create': True}" />
+            </field>
+        </field>
+    </record>
+
+</odoo>

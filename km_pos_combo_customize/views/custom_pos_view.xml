@@ -1,0 +1,12 @@
+<odoo>
+	<record id="custom_pos_order_inheritance_form_view" model="ir.ui.view">
+		<field name="name">pos.order.form.inheritance.view</field>
+		<field name="model">pos.order</field>
+		<field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='combo_prod_ids']" position="replace">
+        		<field name="combo_product_and_qty" />
+			</xpath>
+		</field>
+   	</record>
+</odoo>

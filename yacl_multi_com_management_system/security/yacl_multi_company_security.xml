@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="yacl_pos_product_category_multi_company_rule_id" model="ir.rule">
+        <field name="name">YACL POS Product Category Multi Company Rule ID</field>
+        <field name="model_id" ref="model_pos_category" />
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in',
+            company_ids)]</field>
+    </record>
+
+    <record id="yacl_pos_bill_multi_company_rule_id" model="ir.rule">
+        <field name="name">YACL POS Bill Multi Company Rule ID</field>
+        <field name="model_id" ref="model_pos_bill" />
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in',
+            company_ids)]</field>
+    </record>
+
+    <record id="yacl_pos_floor_multi_company_rule_id" model="ir.rule">
+        <field name="name">YACL POS Floor Multi Company Rule ID</field>
+        <field name="model_id" ref="model_restaurant_floor" />
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in',
+            company_ids)]</field>
+    </record>
+
+    <record id="yacl_pos_attribute_multi_company_rule_id" model="ir.rule">
+        <field name="name">YACL POS Attribute Multi Company Rule ID</field>
+        <field name="model_id" ref="model_product_attribute" />
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in',
+            company_ids)]</field>
+    </record>
+
+    <record id="yacl_pos_printer_multi_company_rule_id" model="ir.rule">
+        <field name="name">YACL POS Printer Multi Company Rule ID</field>
+        <field name="model_id" ref="model_restaurant_printer" />
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in',
+            company_ids)]</field>
+    </record>
+
+    <!-- <record id="yacl_contact_company_rule_id" model="ir.rule">
+        <field name="name">YACL Contact Multi Company Rule ID</field>
+        <field name="model_id" ref="model_res_partner" />
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in',
+            company_ids)]</field>
+    </record> -->
+
+    <!-- <record id="yacl_product_category_multi_company_rule_id" model="ir.rule">
+        <field name="name">YACL Product Category Multi Company Rule ID</field>
+        <field name="model_id" ref="model_product_category" />
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in',
+            company_ids)]</field>
+    </record> -->
+
+</odoo>

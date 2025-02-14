@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <record id="action_pos_report" model="ir.actions.report">
+        <field name="name">Point Of Sale Report</field>
+        <field name="model">pos.report.wizard</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">pos_reports_omax.pos_report</field>
+        <field name="report_file">pos_reports_omax.pos_report</field>
+        <field name="binding_model_id" ref="model_pos_report_wizard"/>
+        <field name="binding_type">report</field>
+    </record>
+    
+    
+    <template id="pos_report">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2><center><strong>WeekDays POS Report</strong></center></h2>
+                        <div class="row justify-content-center mt-2 mb-2">
+                            <div class="col-6">
+                                <strong>Start Date :</strong>
+                                <span t-field="o.start_date" t-options='{"format": "dd/MM/yyyy"}'/>
+                            </div>
+                            <div class="col-6">
+                                <strong>End Date :</strong>
+                                <span t-field="o.end_date" t-options='{"format": "dd/MM/yyyy"}'/>
+                            </div>
+                        </div>
+                        <table class="table table-sn mt20 mb20">
+                            <thead>
+                                <tr>
+                                    <th name="th_product_name" class="text-left">Product Name</th>
+                                    <th name="th_mon" class="text-right">Monday</th>
+                                    <th name="th_tues" class="text-right">Tuesday</th>
+                                    <th name="th_wed" class="text-right">Wednesday</th>
+                                    <th name="th_thurs" class="text-right">Thursday</th>
+                                    <th name="th_fri" class="text-right">Friday</th>
+                                    <th name="th_sat" class="text-right">Saturday</th>
+                                    <th name="th_sun" class="text-right">Sunday</th>
+                                    <th name="th_total" class="text-right">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-set="mon_total" t-value="0"/>
+                                <t t-set="tue_total" t-value="0"/>
+                                <t t-set="wed_total" t-value="0"/>
+                                <t t-set="thurs_total" t-value="0"/>
+                                <t t-set="fri_total" t-value="0"/>
+                                <t t-set="sat_total" t-value="0"/>
+                                <t t-set="sun_total" t-value="0"/>
+                                <t t-set="main_total" t-value="0"/>
+                                <t t-foreach="product_ids" t-as="productdict">
+                                    <t t-set="total" t-value="0"/>
+                                    <tr>
+                                        <td>
+                                            <t t-if="productdict.product_template_attribute_value_ids">
+                                                <t t-set="product_name" t-value=""/>
+                                                <t t-foreach="productdict.product_template_attribute_value_ids" t-as="Keyname">
+                                                    <t t-set="product_name" t-value="Keyname.name"/>
+                                                </t>
+                                                <span t-field="productdict.name"/>&amp;nbsp;<span t-esc="product_name"/>
+                                            </t>
+                                            <t t-else="">
+                                                <span t-field="productdict.name"/>
+                                            </t>
+                                        </td>
+                                        <td name="td_order_line" class="text-center">
+                                            <t t-foreach="productdict_value" t-as="productmonqty">
+                                                <t t-if="productmonqty == 'mon'">
+                                                    <span t-esc="productmonqty_value"/>
+                                                    <t t-set="total" t-value ="total + productmonqty_value"/>
+                                                    <t t-set="mon_total" t-value ="mon_total + productmonqty_value"/>
+                                                </t>
+                                            </t>
+                                        </td>
+                                        <td name="td_order_line" class="text-center">
+                                            <t t-foreach="productdict_value" t-as="productmonqty">
+                                                <t t-if="productmonqty == 'tue'">
+                                                    <span t-esc="productmonqty_value"/>
+                                                    <t t-set="total" t-value ="total + productmonqty_value"/>
+                                                    <t t-set="tue_total" t-value ="tue_total + productmonqty_value"/>
+                                                </t>
+                                            </t>
+                                        </td>
+                                        <td name="td_order_line" class="text-center">
+                                            <t t-foreach="productdict_value" t-as="productmonqty">
+                                                <t t-if="productmonqty == 'wed'">
+                                                    <span t-esc="productmonqty_value"/>
+                                                    <t t-set="total" t-value ="total + productmonqty_value"/>
+                                                    <t t-set="wed_total" t-value ="wed_total + productmonqty_value"/>
+                                                </t>
+                                            </t>
+                                        </td>
+                                        <td name="td_order_line" class="text-center">
+                                            <t t-foreach="productdict_value" t-as="productmonqty">
+                                                <t t-if="productmonqty == 'thurs'">
+                                                    <span t-esc="productmonqty_value"/>
+                                                    <t t-set="total" t-value ="total + productmonqty_value"/>
+                                                    <t t-set="thurs_total" t-value ="thurs_total + productmonqty_value"/>
+                                                </t>
+                                            </t>
+                                        </td>
+                                        <td name="td_order_line" class="text-center">
+                                            <t t-foreach="productdict_value" t-as="productmonqty">
+                                                <t t-if="productmonqty == 'fri'">
+                                                    <span t-esc="productmonqty_value"/>
+                                                    <t t-set="total" t-value ="total + productmonqty_value"/>
+                                                    <t t-set="fri_total" t-value ="fri_total + productmonqty_value"/>
+                                                </t>
+                                            </t>
+                                        </td>
+                                        <td name="td_order_line" class="text-center">
+                                            <t t-foreach="productdict_value" t-as="productmonqty">
+                                                <t t-if="productmonqty == 'sat'">
+                                                    <span t-esc="productmonqty_value"/>
+                                                    <t t-set="total" t-value ="total + productmonqty_value"/>
+                                                    <t t-set="sat_total" t-value ="sat_total + productmonqty_value"/>
+                                                </t>
+                                            </t>
+                                        </td>
+                                        <td name="td_order_line" class="text-center">
+                                            <t t-foreach="productdict_value" t-as="productmonqty">
+                                                <t t-if="productmonqty == 'sun'">
+                                                    <span t-esc="productmonqty_value"/>
+                                                    <t t-set="total" t-value ="total + productmonqty_value"/>
+                                                    <t t-set="sun_total" t-value ="sun_total + productmonqty_value"/>
+                                                </t>
+                                            </t>
+                                        </td>
+                                        <td name="td_order_line" class="text-center">
+                                           <span t-esc="total"/>
+                                            <t t-set="main_total" t-value ="total + main_total"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                            <thead>
+                                <th name="th_total" class="text-left">Total</th>
+                                <th class="text-center"><span t-esc="mon_total"/></th>
+                                <th class="text-center"><span t-esc="tue_total"/></th>
+                                <th class="text-center"><span t-esc="wed_total"/></th>
+                                <th class="text-center"><span t-esc="thurs_total"/></th>
+                                <th class="text-center"><span t-esc="fri_total"/></th>
+                                <th class="text-center"><span t-esc="sat_total"/></th>
+                                <th class="text-center"><span t-esc="sun_total"/></th>
+                                <th class="text-center"><span t-esc="main_total"/></th>
+                            </thead>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

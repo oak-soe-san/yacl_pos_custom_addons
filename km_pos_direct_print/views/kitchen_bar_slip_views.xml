@@ -1,0 +1,17 @@
+<odoo>
+        <record id="view_kitchen_bar_slip_form-inherit" model="ir.ui.view">
+            <field name="name">Kitchen and Bar Printers</field>
+            <field name="model">kitchen.bar.slip</field>
+            <field name="inherit_id" ref="km_pos_slip_kitchen_bar.view_kitchen_bar_slip_form"/>
+            <field name="arch" type="xml">
+                <form string="POS Printer">
+                    <sheet>
+                        <group>
+                            <field name="ip_address"/>
+                            <field name="active"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+</odoo>

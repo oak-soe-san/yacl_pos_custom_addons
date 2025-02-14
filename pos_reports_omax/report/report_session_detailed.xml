@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="paper_format_session_detailed_report" model="report.paperformat">
+        <field name="name">Session Detailed Report</field>
+        <field name="default" eval="True" />
+        <field name="format">custom</field>
+        <field name="page_height">297</field>
+        <field name="page_width">210</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">47</field>
+        <field name="margin_bottom">28</field>
+        <field name="margin_left">7</field>
+        <field name="margin_right">7</field>
+        <field name="header_line" eval="False" />
+        <field name="header_spacing">45</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <record id="action_report_session_detailed" model="ir.actions.report">
+        <field name="name">Session Summary Report</field>
+        <field name="model">pos.session</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">pos_reports_omax.report_session_detailed</field>
+        <field name="report_file">pos_reports_omax.report_session_detailed</field>
+        <field name="binding_model_id" ref="point_of_sale.model_pos_session" />
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="pos_reports_omax.paper_format_session_detailed_report" />
+    </record>
+
+    <template id="pos_session_detailed_report_pdf">
+        <t t-call="web.external_layout">
+            <div class="page">
+                <div class="oe_structure" />
+                <center>
+                    <h2>
+                        <b>POS Session Summary Report</b>
+                    </h2>
+                </center>
+                <div class="mt32"
+                    style="background-color: #262F64 !important; color:rgba(255,255,255,1)!important; font-weight:bold; border: none;">
+                    <center>POS Session #<span t-field="doc.name" /> (<span
+                            t-field="doc.config_id.name" />)</center>
+                </div>
+                <!-- Session Summary -->
+                <div class="row mt32 mb32" id="informations">
+                    <div t-if="doc.user_id" class="col-auto mw-100 mb-2">
+                        <b>Responsible</b>
+                        <p class="m-0" t-field="doc.user_id.name" />
+                    </div>
+                    <div t-if="doc.start_at" class="col-auto mw-100 mb-2">
+                        <b>Opening Date</b>
+                        <p class="m-0" t-esc="doc.get_opened_date()" />
+                    </div>
+                    <div t-if="doc.stop_at and doc.state in ['closed']" class="col-auto mw-100 mb-2">
+                        <b>Closing Date</b>
+                        <p class="m-0" t-esc="doc.get_closed_date()" />
+                    </div>
+                    <div class="col-auto mw-100 mb-2">
+                        <b>Session Status</b>
+                        <p class="m-0" t-field="doc.state" />
+                    </div>
+                    <div class="col-auto mw-100 mb-2">
+                        <b>Report ON</b>
+                        <p class="m-0" t-esc="doc.get_current_datetime()" />
+                    </div>
+                </div>
+                <div class="row mt32 mb32" id="informations">
+                    <div class="col-auto mw-100 mb-2">
+                        <b>Opening Balance</b>
+                        <p class="m-0" t-esc="doc.cash_register_balance_start"
+                            t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}" />
+                    </div>
+                    <div class="col-auto mw-100 mb-2">
+                        <b>Closing Balance</b>
+                        <p class="m-0" t-esc="doc.cash_register_balance_end_real"
+                            t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}" />
+                    </div>
+                    <div class="col-auto mw-100 mb-2">
+                        <b>Difference</b>
+                        <p class="m-0" t-esc="doc.get_diff_valaue_of_close_session()"
+                            t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}" />
+                    </div>
+                    <div class="col-auto mw-100 mb-2">
+                        <b>Gross Sales</b>
+                        <p class="m-0" t-esc="doc.get_session_amount_data().get('total_sale', 0)"
+                            t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}" />
+                    </div>
+                    <div class="col-auto mw-100 mb-2">
+                        <b>Tax</b>
+                        <p class="m-0" t-esc="doc.get_session_amount_data().get('tax', 0)"
+                            t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}" />
+                    </div>
+                    <div class="col-auto mw-100 mb-2">
+                        <b>Discount Amount</b>
+                        <p class="m-0" t-esc="doc.get_session_amount_data().get('discount', 0)"
+                            t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}" />
+                    </div>
+                    <div class="col-auto mw-100 mb-2">
+                        <b>Total</b>
+                        <p class="m-0" t-esc="doc.get_session_amount_data().get('final_total', 0)"
+                            t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}" />
+                    </div>
+                </div>
+                <!-- POS Order Summary -->
+                <div class="mt32"
+                    style="background-color: #262F64 !important; color:rgba(255,255,255,1)!important; font-weight:bold; border: none;">
+                    <center>POS Orders Summary</center>
+                </div>
+                <table class="table table-sm o_main_table">
+                    <thead>
+                        <tr>
+                            <th class="text-left">
+                                <b>Order Ref</b>
+                            </th>
+                            <th class="text-left">
+                                <b>Order Date</b>
+                            </th>
+                            <th class="text-left">
+                                <b>Customer</b>
+                            </th>
+                            <th class="text-left">
+                                <b>Receipt Number</b>
+                            </th>
+                            <th class="text-right">
+                                <b>Tax Amount</b>
+                            </th>
+                            <th class="text-right">
+                                <b>Total Amount</b>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="sale_tbody">
+                        <t t-foreach="doc.order_ids" t-as="pos_order">
+                            <tr>
+                                <td>
+                                    <span t-field="pos_order.name" />
+                                </td>
+                                <td>
+                                    <span t-esc="doc.get_formated_date(pos_order.date_order)" />
+                                </td>
+                                <td>
+                                    <span t-if="pos_order.partner_id"
+                                        t-field="pos_order.partner_id.name" />
+                                </td>
+                                <td>
+                                    <span t-esc="pos_order.pos_reference" />
+                                </td>
+                                <td class="text-right">
+                                    <span t-esc="round(pos_order.amount_tax,2)"
+                                        t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}" />
+                                </td>
+                                <td class="text-right">
+                                    <span t-esc="round(pos_order.amount_total,2)"
+                                        t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}" />
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+                <!-- Picking(Delivery Order) Summary -->
+                <div class="mt32"
+                    style="background-color: #262F64 !important; color:rgba(255,255,255,1)!important; font-weight:bold; border: none;">
+                    <center>Picking(Delivery Order) Summary</center>
+                </div>
+                <table class="table table-sm o_main_table">
+                    <thead>
+                        <tr>
+                            <th class="text-left">
+                                <b>Picking Ref</b>
+                            </th>
+                            <th class="text-left">
+                                <b>Deliver To</b>
+                            </th>
+                            <th class="text-left">
+                                <b>Scheduled Date</b>
+                            </th>
+                            <th class="text-left">
+                                <b>Source Document</b>
+                            </th>
+                            <th class="text-left">
+                                <b>Status</b>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="sale_tbody">
+                        <t t-foreach="doc.get_pickings()" t-as="picking">
+                            <tr>
+                                <td>
+                                    <span t-field="picking.name" />
+                                </td>
+                                <td>
+                                    <span t-if="picking.partner_id"
+                                        t-field="picking.partner_id.name" />
+                                </td>
+                                <td>
+                                    <span t-esc="doc.get_formated_date(picking.scheduled_date)" />
+                                </td>
+                                <td>
+                                    <span t-if="picking.origin" t-field="picking.origin" />
+                                </td>
+                                <td>
+                                    <span t-field="picking.state" />
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+                <!-- Session Payment Summary -->
+                <div class="mt32"
+                    style="background-color: #262F64 !important; color:rgba(255,255,255,1)!important; font-weight:bold; border: none;">
+                    <center>Payment Summary</center>
+                </div>
+                <table class="table table-sm o_main_table">
+                    <thead>
+                        <tr>
+                            <th class="text-left">
+                                <b>Payment Date</b>
+                            </th>
+                            <th class="text-left">
+                                <b>Payment Method</b>
+                            </th>
+                            <th class="text-left">
+                                <b>Order Ref</b>
+                            </th>
+                            <th class="text-right">
+                                <b>Amount</b>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="sale_tbody">
+                        <t t-foreach="doc.get_session_payments()" t-as="payment">
+                            <tr>
+                                <td>
+                                    <span t-field="payment.payment_date" />
+                                </td>
+                                <td>
+                                    <span t-if="payment.payment_method_id"
+                                        t-field="payment.payment_method_id.name" />
+                                </td>
+                                <td>
+                                    <span t-if="payment.pos_order_id"
+                                        t-field="payment.pos_order_id.name" />
+                                </td>
+                                <td class="text-right">
+                                    <span t-esc="round(payment.amount,2)"
+                                        t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}" />
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+                <!-- Session Invoice Summary -->
+                <div class="mt32"
+                    style="background-color: #262F64 !important; color:rgba(255,255,255,1)!important; font-weight:bold; border: none;">
+                    <center>Invoice Summary</center>
+                </div>
+                <table class="table table-sm o_main_table">
+                    <thead>
+
+                        <tr>
+                            <th class="text-left">
+                                <b>Invoice Number</b>
+                            </th>
+                            <th class="text-left">
+                                <b>Customer</b>
+                            </th>
+                            <th class="text-left">
+                                <b>Invoice Date</b>
+                            </th>
+                            <th class="text-left">
+                                <b>Order Ref</b>
+                            </th>
+                            <th class="text-right">
+                                <b>Amount</b>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="sale_tbody">
+                        <t t-foreach="doc.get_session_invoices()" t-as="invoice">
+                            <tr>
+                                <td>
+                                    <span t-field="invoice.name" />
+                                </td>
+                                <td>
+                                    <span t-if="invoice.partner_id"
+                                        t-field="invoice.partner_id.name" />
+                                </td>
+                                <td>
+                                    <span t-if="invoice.invoice_date" t-field="invoice.invoice_date" />
+                                </td>
+                                <td>
+                                    <span t-if="invoice.invoice_origin"
+                                        t-field="invoice.invoice_origin" />
+                                </td>
+                                <td class="text-right">
+                                    <span t-esc="round(invoice.amount_total,2)"
+                                        t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}" />
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+                <!-- Session Barcode -->
+                <div class="mt32"
+                    style="background-color: #262F64 !important; color:rgba(255,255,255,1)!important; font-weight:bold; border: none;">
+                    <center>POS Session Barcode</center>
+                </div>
+                <table class="table border-0" width="100%">
+                    <tr class="border-0">
+                        <td width="100%" class="border-0">
+                            <center>
+                                <b>
+                                    <div t-if="doc.name" t-field="doc.name"
+                                        t-options="{'widget': 'barcode', 'img_style': 'width:100%;height:35%', 'img_align': 'center', 'type':'Code128'}" />
+                                    <br />
+                                    <b>
+                                        <span t-if="doc.name" t-field="doc.name"></span>
+                                    </b>
+                                </b>
+                            </center>
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+        </t>
+    </template>
+
+    <template id="report_session_detailed">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="pos_reports_omax.pos_session_detailed_report_pdf" />
+            </t>
+        </t>
+    </template>
+</odoo>

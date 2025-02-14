@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-inherit="point_of_sale.ProductItem" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('product-name')]" position="before">
+            <span class="int_reference">
+                [<t t-esc="props.product.default_code" />]
+            </span>
+        </xpath>
+    </t>
+</templates>

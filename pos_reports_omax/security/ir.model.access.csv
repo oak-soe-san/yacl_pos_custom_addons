@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_pos_report_wizard,access_pos_report_wizard,model_pos_report_wizard,,1,1,1,1
+access_pos_excel_report,access_pos_excel_report,model_pos_excel_report,,1,1,1,1
+access_pos_payment_excel_report,access_pos_payment_excel_report,model_pos_payment_excel_report,,1,1,1,1
+access_pos_payment_report_wizard,access_pos_payment_report_wizard,model_pos_payment_report_wizard,,1,1,1,1
+access_pos_tax_wizard,access_pos_tax_wizard,model_pos_tax_wizard,,1,1,1,1

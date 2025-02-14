@@ -1,0 +1,20 @@
+<odoo>
+    <record id="product_bundle_product_form_view" model="ir.ui.view">
+        <field name="name">product.product.pack</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='options']" position="inside">
+                <span class="d-inline-block">
+                    <field name="is_discount_product"/>  
+                    <label for="is_discount_product"/> 
+                </span>
+
+                <span class="d-inline-block">
+                    <field name="is_ewallet_product"/>
+                    <label for="is_ewallet_product"/>
+                </span>
+            </xpath>
+        </field>
+    </record>
+</odoo>

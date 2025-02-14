@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+	<t t-name="OrderReceipt" t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('receipt-change')]" position="after">
+            <div t-if="props.multicurrencyscreen">
+                <t t-if="props.isBill">
+                     Exchange Rate:
+                     <t t-set="currency_symbol_with_name"
+                        t-value="env.pos.currency.symbol"/>
+                    <t t-set="rounded_currency_value"
+                       t-value="''+ props.secondcurrency.rate +  ' ' + props.secondcurrency.symbol + ''"/>
+                        <span t-esc="'' + 1 + ' ' + env.pos.currency.symbol + ''" style="margin-left:7%;"/>
+                    x
+                    <span t-esc="rounded_currency_value"/>
+                 </t>
+            </div>
+        </xpath>
+	</t>
+</templates>

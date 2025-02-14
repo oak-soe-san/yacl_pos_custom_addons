@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="izel_pos_product_category_inherit_view_id" model="ir.ui.view">
+        <field name="name">izel.pos.product.category.inherit.view.id</field>
+        <field name="model">pos.category</field>
+        <field name="inherit_id" ref="point_of_sale.product_pos_category_form_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='sequence']" position="after">
+                <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="izel_pos_bill_inherit_view_id" model="ir.ui.view">
+        <field name="name">izel.pos.bill.inherit.view.id</field>
+        <field name="model">pos.bill</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_bill_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='pos_config_ids']" position="after">
+                <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="izel_product_template_inherit_view_id" model="ir.ui.view">
+        <field name="name">izel.product.template.inherit.view.id</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='sales']" position="after">
+                <page name="discount" string="Discount">
+                    <group>
+                        <group name="discount" string="Discount">
+                            <field name="is_discount_product" />
+                            <field name="is_discount_label" />
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="izel_floor_id_inherit_view_id" model="ir.ui.view">
+        <field name="name">izel.floor.id.inherit.view.id</field>
+        <field name="model">restaurant.floor</field>
+        <field name="inherit_id" ref="pos_restaurant.view_restaurant_floor_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='background_color']" position="after">
+                <field name="company_id" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="izel_pos_receipt_code_inherit_view_id" model="ir.ui.view">
+        <field name="name">izel.pos.receipt.code.inherit.view.id</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='barcode']" position="after">
+                <field name="additional_info_id" />
+                <field name="shop_name_id" attrs="{'invisible': [('additional_info_id','!=', True)]}" />
+                <field name="room_number_id" attrs="{'invisible': [('additional_info_id','!=', True)]}" />
+                <field name="sub_catg_id" attrs="{'invisible': [('additional_info_id','!=', True)]}" />
+                <field name="department_id" attrs="{'invisible': [('additional_info_id','!=', True)]}" />
+                <field name="season_id" attrs="{'invisible': [('additional_info_id','!=', True)]}" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="izel_session_z_product_inherit_view_id" model="ir.ui.view">
+        <field name="name">izel.session.z.product.inherit.view.id</field>
+        <field name="model">pos.session</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_session_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='cash_register_balance_end_real']" position="after">
+                <field name="session_z_product" widget="boolean_toggle" />
+                <field name="session_z_product_tax_exclusive" widget="boolean_toggle" />
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

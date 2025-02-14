@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="pos_tax_receipt_form_view">
+        <field name="name">POS Tax Receipt</field>
+        <field name="model">pos.tax.wizard</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <group>
+                    <group>
+                        <field name="start_date"/>
+                        <field name="end_date"/>
+                    </group>
+                    <group>
+                        <field name="company_ids" widget="many2many_tags"/>
+                        <field name="user_ids" widget="many2many_tags"/>
+                        <field name="pos_config_ids" widget="many2many_tags"/>
+                    </group>
+                </group>
+                <footer>
+                    <button string="Print Receipt" name="print_pos_tax_receipt" type="object" class="oe_highlight"/>
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    
+    <record id="action_pos_tax_receipt_menu" model="ir.actions.act_window">
+        <field name="name">POS Tax Receipt</field>
+        <field name="res_model">pos.tax.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+    
+    <menuitem
+        id="pos_tax_receipt_menu"
+        name="POS Tax Receipt"
+		action="action_pos_tax_receipt_menu"
+        parent="point_of_sale.menu_point_rep"
+        sequence="5"/>
+
+</odoo>

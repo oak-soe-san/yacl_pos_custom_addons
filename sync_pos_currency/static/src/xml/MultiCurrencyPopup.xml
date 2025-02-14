@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="MultiCurrencyPopup" owl="1">
+        <div class="popup popup-text">
+            <header class="title">
+                <t>Multi Currency</t>
+            </header>
+
+            <main class="body col-lg-4 col-md-6 col-sm-12">
+                <div style="display: flex;flex-direction: column;align-items: baseline;padding: 0px 25px;">
+                    <div style="height: 23px;width: 100%">
+                        <label for="currency_select" style="width: 50%;font-weight: bold;">Select Currency :</label>
+                        <select class="form-select" aria-label=".form-select-sm currency"
+                                style="margin-left:5px;border:0;width:66%;background:transparent;border-bottom: 1px solid #000;outline: none;" t-on-change="getValues">
+                            <option t-foreach="values" t-as="value" t-key="value.id" t-att-value="value.id">
+                                <t t-set="selection_option" t-value="value.name + '(' + value.symbol + ')'"/>
+                                <span t-esc="selection_option" style="font-size:15px;font-weight: 500"/>
+                            </option>
+                        </select>
+                    </div>
+
+                    <div style="height: 23px;width: 100%">
+                        <label for="payment_method" style="width: 50%;font-weight: bold; margin-right: -136px; margin-top: 40px;">Payment Method :</label>
+                        <select class="payment-method-select" aria-label=".form-select-payment payment_method_currency"
+                                style="padding:5px;margin-left:130px;border:0;width:66%;background:transparent;border-bottom: 1px solid #000;outline: none;">
+                            <option t-foreach="props.payment_method" t-as="value" t-key="value.id" t-att-value="value.id">
+                                <t t-set="selection_option" t-value="value.name"/>
+                                <span t-esc="selection_option" style="font-size:15px;font-weight: 500"/>
+                            </option>
+                        </select>
+                    </div>
+
+                    <div style="margin-top:20px">
+                        <label for="currency_rate" style="font-weight: bold;">Current Rate :</label>
+                        <span id="currency_rate" style="margin-left:5px">
+                            <t t-esc="selected_rate"/>
+                        </span>
+                    </div>
+                    <div style="margin-top:10px">
+                        <label for="currency_rate" style="font-weight: bold;">Amount to be paid in (<t t-esc="symbol"/>):</label>
+                        <span id="currency_rate" style="margin-left:5px">
+                            <t t-esc="amount_total_currency"/>
+                        </span>
+                    </div>
+                    <div style="margin-top:10px;margin-bottom:10px;text-align: left;width: 100%">
+                        <input class="form-control form-control-sm pay_amount" type="number" placeholder="Enter Amount">
+                    </div>
+                </div>
+            </main>
+
+            <footer class="footer">
+                <div class="button highlight confirm" t-on-click="confirm">
+                    Add
+                </div>
+                <div class="button cancel" t-on-click="cancel">
+                    Cancel
+                </div>
+            </footer>
+
+        </div>
+    </t>
+
+</templates>

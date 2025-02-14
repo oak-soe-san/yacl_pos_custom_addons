@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Sale Item Menu Group Report Template -->
+    <template id="pos_management_system.sale_item_menu_group_report_template">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <div class="oe_structure">
+                        <div class="text-center" style="front-weight:bold">
+                            <h2>SALE ITEM MENU GROUP REPORT</h2>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <table class="table table-sm o_main_table">
+                                    <thead>
+                                        <tr>
+                                            <th name="product_code" class="text-center"
+                                                style="font-weight: bolder;">
+                                                <span>Code</span>
+                                            </th>
+                                            <th name="product_name" class="text-center"
+                                                style="font-weight: bolder;">
+                                                <span>Name</span>
+                                            </th>
+                                            <th name="product_price" class="text-center"
+                                                style="font-weight: bolder;">
+                                                <span>Unit Price</span>
+                                            </th>
+                                            <th name="product_qty" class="text-center"
+                                                style="font-weight: bolder;">
+                                                <span>QTY</span>
+                                            </th>
+                                            <th name="product_sale" class="text-center"
+                                                style="font-weight: bolder;">
+                                                <span>Gross Sale</span>
+                                            </th>
+                                            <th name="product_sale" class="text-center"
+                                                style="font-weight: bolder;">
+                                                <span>Discount AMT</span>
+                                            </th>
+                                            <th name="product_sale" class="text-center"
+                                                style="font-weight: bolder;">
+                                                <span>Discount(%)</span>
+                                            </th>
+                                            <th name="product_sale" class="text-center"
+                                                style="font-weight: bolder;">
+                                                <span>Net Sale</span>
+                                            </th>
+                                            <th name="product_cog" class="text-center"
+                                                style="font-weight: bolder;">
+                                                <span>Cost of Good</span>
+                                            </th>
+                                            <th name="product_profit" class="text-center"
+                                                style="font-weight: bolder;">
+                                                <span>Profit</span>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-set="grand_qty_total" t-value="0" />
+                                        <t t-set="grand_gross_sale_total" t-value="0" />
+                                        <t t-set="grand_net_sale_total" t-value="0" />
+
+
+                                        <t t-foreach="order_data['datas']" t-as="category_name">
+                                            
+                                            <t t-set="product_qty_total" t-value="0" />
+                                            <t t-set="gross_sale_total" t-value="0" />
+                                            <t t-set="discount_total" t-value="0" />
+                                            <t t-set="net_sale_total" t-value="0" />
+                                            <t t-set="cost_total" t-value="0" />
+                                            <t t-set="profit_total" t-value="0" />
+
+                                            <tr>
+                                                <td colspan="10" class="text-center"
+                                                    style="font-weight: bolder; font-size: 20px; text-decoration-line: underline;">
+                                                    <span
+                                                        t-esc="category_name" />
+                                                </td>
+                                            </tr>
+                                            <t
+                                                t-foreach="order_data['datas'][category_name].items()"
+                                                t-as="line">
+                                                <t t-set="product_qty_total"
+                                                    t-value="product_qty_total + line[1]['qty']" />
+                                                <t
+                                                    t-set="gross_sale_total"
+                                                    t-value="gross_sale_total + line[1]['gross_sale']" />
+                                                <t
+                                                    t-set="discount_total"
+                                                    t-value="discount_total + line[1]['discount_amt']" />
+                                                <t
+                                                    t-set="net_sale_total"
+                                                    t-value="net_sale_total + line[1]['net_sale']" />
+                                                <t
+                                                    t-set="cost_total"
+                                                    t-value="cost_total + line[1]['cos']" />
+                                                <t
+                                                    t-set="profit_total"
+                                                    t-value="profit_total + line[1]['profit']" />
+                                                <tr>
+                                                    <td class="text-center">
+                                                        <span t-esc="line[1]['code']" />
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <span t-esc="line[0]" />
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <span t-esc="line[1]['unit_price']"
+                                                            t-options='{"widget":"float", "precision":2}' />
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <span t-esc="line[1]['qty']" />
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <span t-esc="line[1]['gross_sale']"
+                                                            t-options='{"widget":"float", "precision":2}' />
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <span t-esc="line[1]['discount_amt']"
+                                                            t-options='{"widget":"float", "precision":2}' />
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <span t-esc="line[1]['discount_percentage']"
+                                                            t-options='{"widget":"float", "precision":2}' />
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <span t-esc="line[1]['net_sale']"
+                                                            t-options='{"widget":"float", "precision":2}' />
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <span t-esc="line[1]['cos']"
+                                                            t-options='{"widget":"float", "precision":2}' />
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <span t-esc="line[1]['profit']"
+                                                            t-options='{"widget":"float", "precision":2}' />
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                            <tr>
+                                                <t
+                                                    t-set="grand_qty_total"
+                                                    t-value="grand_qty_total + product_qty_total" />
+
+                                                <t
+                                                    t-set="grand_gross_sale_total"
+                                                    t-value="grand_gross_sale_total + gross_sale_total" />
+
+                                                <t
+                                                    t-set="grand_net_sale_total"
+                                                    t-value="grand_net_sale_total + net_sale_total" />
+
+                                                <td class="text-center" colspan="3"
+                                                    style="font-weight: bolder;">
+                                                    <span>
+                                                        Sub Total
+                                                    </span>
+                                                </td>
+                                                <td class="text-center"
+                                                    style="font-weight: bolder;">
+                                                    <span t-esc="product_qty_total" />
+                                                </td>
+                                                <td class="text-center"
+                                                    style="font-weight: bolder;">
+                                                    <span t-esc="gross_sale_total"
+                                                        t-options='{"widget": "float", "precision": 2}' />
+                                                </td>
+                                                <td class="text-center"
+                                                    style="font-weight: bolder;">
+                                                    <span
+                                                        t-esc="discount_total"
+                                                        t-options='{"widget": "float", "precision": 2}' />
+                                                </td>
+                                                <td>
+
+                                                </td>
+                                                <td class="text-center"
+                                                    style="font-weight: bolder;">
+                                                    <span t-esc="net_sale_total"
+                                                        t-options='{"widget": "float", "precision": 2}' />
+                                                </td>
+                                                <td class="text-center"
+                                                    style="font-weight: bolder;">
+                                                    <span t-esc="cost_total"
+                                                        t-options='{"widget": "float", "precision": 2}' />
+                                                </td>
+                                                <td class="text-center"
+                                                    style="font-weight: bolder;">
+                                                    <span t-esc="profit_total"
+                                                        t-options='{"widget": "float", "precision": 2}' />
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                                <br />
+                                <br />
+                                <div class="row">
+                                    <div class="col text-right"
+                                        style="font-size:18px;font-weight:bold;color:#21339b">
+                                        <span>GRAND TOTAL ITEM QTY</span>
+                                        <span>:</span>
+                                        <span t-esc="grand_qty_total" />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col text-right"
+                                        style="font-size:18px;font-weight:bold;color:#21339b">
+                                        <span>GRAND TOTAL GROSS SALE</span>
+                                        <span>:</span>
+                                        <span t-esc="grand_gross_sale_total"
+                                            t-options='{"widget": "float", "precision": 2}' />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col text-right"
+                                        style="font-size:18px;font-weight:bold;color:#21339b">
+                                        <span>GRAND TOTAL NET SALE</span>
+                                        <span>:</span>
+                                        <span t-esc="grand_net_sale_total"
+                                            t-options='{"widget": "float", "precision": 2}' />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+
+
+    <!-- Backup Code -->
+    <!-- Sale Item Menu Group Report Template -->
+    <!-- <template id="pos_management_system.sale_item_menu_group_report_template">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <div class="oe_structure">
+                        <div class="text-center" style="front-weight:bold">
+                            <h2>SALE ITEM MENU GROUP REPORT</h2>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <table class="table table-sm o_main_table">
+                                    <thead>
+                                        <tr>
+                                            <th name="product_code" class="text-center"
+                                                style="font-weight: bolder;">
+                                                <span>Code</span>
+                                            </th>
+                                            <th name="product_name" class="text-center"
+                                                style="font-weight: bolder;">
+                                                <span>Name</span>
+                                            </th>
+                                            <th name="product_price" class="text-center"
+                                                style="font-weight: bolder;">
+                                                <span>Unit Price</span>
+                                            </th>
+                                            <th name="product_qty" class="text-center"
+                                                style="font-weight: bolder;">
+                                                <span>QTY</span>
+                                            </th>
+                                            <th name="product_sale" class="text-center"
+                                                style="font-weight: bolder;">
+                                                <span>Gross Sale</span>
+                                            </th>
+                                            <th name="product_sale" class="text-center"
+                                                style="font-weight: bolder;">
+                                                <span>Iteam Discount</span>
+                                            </th>
+                                            <th name="product_sale" class="text-center"
+                                                style="font-weight: bolder;">
+                                                <span>Net Sale</span>
+                                            </th>
+                                            <th name="product_cog" class="text-center"
+                                                style="font-weight: bolder;">
+                                                <span>Cost of Good</span>
+                                            </th>
+                                            <th name="product_profit" class="text-center"
+                                                style="font-weight: bolder;">
+                                                <span>Profit</span>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="order_data" t-as="order_data_line">
+                                            <t t-foreach="order_data_line['datas']" t-as="data">
+                                                <tr>
+                                                    <td colspan="10" class="text-center"
+                                                        style="font-weight: bolder; font-size: 20px; text-decoration-line: underline;">
+                                                        <span
+                                                            t-esc="data['category_name']" />
+                                                    </td>
+                                                </tr>
+                                                <t t-foreach="data['lines']" t-as="val">
+                                                    <tr>
+                                                        <td class="text-center">
+                                                            <span t-esc="val['item_code']" />
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <span t-esc="val['item']" />
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <span t-esc="val['item_unit_price']" />
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <span t-esc="val['qty']" />
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <span
+                                                                t-esc="val['total_item_gross_sale']" />
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <span
+                                                                t-esc="val['total_item_discount_amount']" />
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <span t-esc="val['total_net_sale']"
+                                                                t-options='{"widget": "float", "precision": 2}' />
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <span t-esc="val['cost_of_good']" />
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <span t-esc="val['profit']" />
+                                                        </td>
+                                                    </tr>
+                                                </t>
+                                                <tr>
+                                                    <td class="text-center" colspan="3"
+                                                        style="font-weight: bolder;">
+                                                        <span>
+                                                            Sub Total
+                                                        </span>
+                                                    </td>
+                                                    <td class="text-center"
+                                                        style="font-weight: bolder;">
+                                                        <span t-esc="data['sub_total_item_count']"
+                                                            t-options='{"widget": "float", "precision": 2}' />
+                                                    </td>
+                                                    <td class="text-center"
+                                                        style="font-weight: bolder;">
+                                                        <span t-esc="data['sub_total_gross_sale']"
+                                                            t-options='{"widget": "float", "precision": 2}' />
+                                                    </td>
+                                                    <td class="text-center"
+                                                        style="font-weight: bolder;">
+                                                        <span
+                                                            t-esc="data['sub_total_item_discount']"
+                                                            t-options='{"widget": "float", "precision": 2}' />
+                                                    </td>
+                                                    <td class="text-center"
+                                                        style="font-weight: bolder;">
+                                                        <span t-esc="data['sub_total_net_sale']"
+                                                            t-options='{"widget": "float", "precision": 2}' />
+                                                    </td>
+                                                    <td class="text-center"
+                                                        style="font-weight: bolder;">
+                                                        <span t-esc="data['sub_total_cog']"
+                                                            t-options='{"widget": "float", "precision": 2}' />
+                                                    </td>
+                                                    <td class="text-center"
+                                                        style="font-weight: bolder;">
+                                                        <span t-esc="data['sub_total_profit']"
+                                                            t-options='{"widget": "float", "precision": 2}' />
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </t>
+                                    </tbody>
+                                </table>
+                                <br />
+                                <br />
+                                <div class="row">
+                                    <div class="col text-right"
+                                        style="font-size:18px;font-weight:bold;color:#21339b">
+                                        <span>GRAND TOTAL ITEM QTY</span>
+                                        <span>:</span>
+                                        <span t-esc="order_data_line['grand_total_item_count']"
+                                            t-options='{"widget": "float", "precision": 2}' />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col text-right"
+                                        style="font-size:18px;font-weight:bold;color:#21339b">
+                                        <span>GRAND TOTAL GROSS SALE</span>
+                                        <span>:</span>
+                                        <span t-esc="order_data_line['grand_total_gross_sale']"
+                                            t-options='{"widget": "float", "precision": 2}' />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col text-right"
+                                        style="font-size:18px;font-weight:bold;color:#21339b">
+                                        <span>GRAND TOTAL NET SALE</span>
+                                        <span>:</span>
+                                        <span t-esc="order_data_line['grand_total_net_sale']"
+                                            t-options='{"widget": "float", "precision": 2}' />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template> -->
+
+</odoo>

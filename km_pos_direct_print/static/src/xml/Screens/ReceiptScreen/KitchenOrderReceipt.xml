@@ -1,0 +1,23 @@
+<templates id="template">
+    <t t-name="KitchenOrderReceiptExtend" t-inherit="km_pos_slip_kitchen_bar.KitchenOrderReceipt" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[@class='orderlines']" position="replace">
+            <div class="orderlines">
+                <t t-name="KitchenOrderLinesReceipt" owl="1">
+                    <table  style="width: 100%">
+                        <t t-foreach="receipt.orderlines" t-as="line" t-key="line.id">
+                            <t t-if="line.quantity != line.printed_total_qty">
+                                <t t-if="line.printed_qty !=0">
+                                    <tr style='line-height: 1.6'>
+                                        <td><t t-esc="line.product_name_wrapped" /></td>
+                                        <td><t t-esc="line.printed_qty"/></td>
+                                        <td>X</td>
+                                    </tr>
+                                </t>
+                            </t>
+                        </t>
+                    </table>
+                </t>
+            </div>
+        </xpath>
+    </t>
+</templates>

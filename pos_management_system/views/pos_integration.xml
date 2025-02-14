@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="izel_pos_integration_view_tree" model="ir.ui.view">
+        <field name="name">izel.pos.integration.view.tree</field>
+        <field name="model">izel.pos.integration</field>
+        <field name="arch" type="xml">
+            <tree string="POS Integration" default_order="start_date desc">
+                <field name="name" />
+                <field name="start_date" />
+                <field name="end_date" />
+                <field name="tp_session_id" />
+                <field name="order_qty" />
+                <field name="price_subtotal" />
+                <field name="amount_tax" />
+                <field name="price_subtotal_incl" />
+                <field name="amount_total" />
+                <field name="currency_id" />
+                <field name="company_id" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="izel_pos_integration_view_form" model="ir.ui.view">
+        <field name="name">izel.pos.integration.view.form</field>
+        <field name="model">izel.pos.integration</field>
+        <field name="arch" type="xml">
+            <form string="POS Integration">
+                <sheet>
+                    <group>
+                        <group name="info" string="Unit Information">
+                            <field name="name" />
+                            <field name="company_id" />
+                            <field name="currency_id" />
+                        </group>
+                        <group name="session" string="Session Information">
+                            <field name="tp_session_id" />
+                            <field name="start_date" />
+                            <field name="end_date" />
+                            <field name="order_qty" />
+                            <field name="price_subtotal" />
+                            <field name="amount_tax" />
+                            <field name="price_subtotal_incl" />
+                            <field name="amount_total" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>

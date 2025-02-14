@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates id="template" xml:space="preserve">
+
+     <t t-name="PaymentScreen" t-inherit="point_of_sale.PaymentScreen" t-inherit-mode="extension" owl="1">
+         <xpath expr="//div[hasclass('payment-buttons')]" position="inside">
+             <div class="multicurrency-button" t-if="env.pos.config.multi_currency_payment">
+                 <div class="button" t-on-click="payMultipleCurrency">
+                     <i class="fa fa-money" role="img" title="MultiCurrency" />
+                     <span>
+                        <t>
+                            Multi-Currency
+                        </t>
+                    </span>
+                    </div>
+                </div>
+         </xpath>
+     </t>
+
+    <t t-name="PaymentScreenPaymentLines" t-inherit="point_of_sale.PaymentScreenPaymentLines" t-inherit-mode="extension" owl="1">
+         <xpath expr="//div[hasclass('payment-amount')]" position="before">
+             <t t-if="line.currency_amount_total">
+                 <div class="multicurrency_payment" style="margin-left:10px;margin-right:10px;padding: 17px">
+                     <t t-set="currency_value_symbol" t-value="'(' + line.currency_amount_total + line.selected_currency_symbol + ')'"/>
+                     <t t-esc="currency_value_symbol"/>
+                 </div>
+             </t>
+         </xpath>
+        <xpath expr="//div[@t-att-class='unselectedLineClass(line)']/div[hasclass('payment-amount')]" position="before">
+             <t t-if="line.currency_amount_total">
+                 <div class="multicurrency_payment" style="margin-left:10px;margin-right:10px;padding: 17px">
+                     <t t-set="currency_value_symbol" t-value="'(' + line.currency_amount_total + line.selected_currency_symbol + ')'"/>
+                     <t t-esc="currency_value_symbol"/>
+                 </div>
+             </t>
+         </xpath>
+     </t>
+
+</templates>
+

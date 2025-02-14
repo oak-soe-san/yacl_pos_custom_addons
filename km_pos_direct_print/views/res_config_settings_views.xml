@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="res_config_settings_view_pos_kitchen_bar_slip_extend" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.pos_kitchen_bar_slip.extend</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="km_pos_slip_kitchen_bar.res_config_settings_view_pos_kitchen_bar_slip"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//label[@for='pos_is_kitchen_bar_slip']" position="after">
+
+                <div class="content-group mt16" attrs="{'invisible': [('pos_is_kitchen_bar_slip', '=', False)]}">
+                    <div class="row">
+                        <label string="Bar Printer" for="pos_bar_printer_id" class="col-lg-4 o_light_label" />
+                        <field name="pos_bar_printer_id"/>
+                    </div>
+                    <div class="row">
+                        <label string="Kitchen Printer" for="pos_kitchen_printer_id" class="col-lg-4 o_light_label"/>
+                        <field name="pos_kitchen_printer_id"/>
+                    </div>
+                </div>
+            </xpath>
+
+            <xpath expr="//div[contains(text(), 'Print kitchen and bar slip')]" position="replace">
+
+            </xpath>
+        </field>
+    </record>
+</odoo>

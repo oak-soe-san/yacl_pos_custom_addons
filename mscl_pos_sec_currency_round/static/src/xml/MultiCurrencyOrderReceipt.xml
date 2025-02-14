@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="OrderReceipt" t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension" owl="1">
+			<xpath expr="//div[@class='pos-receipt']//div/div[@class='pos-receipt-amount']" position="attributes">
+			<attribute name="style">display: none;</attribute>
+		</xpath>
+		<xpath expr="//*[hasclass('pos-receipt-amount')]" position="after">
+    		<div t-if="props.multicurrencyscreen">
+    			<t t-set="_total" t-value="props.secondcurrency.symbol + ' ' + Math.ceil((receipt.total_with_tax * props.secondcurrency.rate)/50)*50" />
+	    		<div t-if="env.pos.format_currency(receipt.total_with_tax) != _total" class="pos-receipt-amount">
+	                TOTAL
+	                <span t-esc="_total" class="pos-receipt-right-align"/>
+	            </div>
+	        </div>
+    	</xpath>
+    </t>
+</templates>

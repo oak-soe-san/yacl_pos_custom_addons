@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hourly_sale_report,Hourly_Sale_Report_Access,model_hourly_sale_report_wizard,base.group_user,1,1,1,1
+access_shift_report,Shift_Report_Access,model_shift_report_wizard,base.group_user,1,1,1,1
+access_monthly_sale_report,Monthly_Sale_Report_Access,model_monthly_sale_report_wizard,base.group_user,1,1,1,1
+access_sale_item_menu_group_report,Sale_Item_Menu_Group_Report,model_sale_item_menu_group_report_wizard,base.group_user,1,1,1,1
+access_pos_integration,Access POS Integration,model_izel_pos_integration,base.group_user,1,1,1,1
+access_product_department,Access Product Department,model_izel_product_department,base.group_user,1,1,1,1
+access_product_season,Access Product Season,model_izel_product_season,base.group_user,1,1,1,1

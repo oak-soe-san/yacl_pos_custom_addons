@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="BarOrderReceipt" owl="1">
+        <div class="pos-receipt">
+            <div style="text-align: center">
+
+                <div style="display: none;">
+                    <img class="pos-receipt-logo" t-att-src="receipt.company.logo" alt="Logo"/>
+                </div>
+
+                <div class="pos-receipt-order-data" style='padding:10px'>
+                    <!-- <div style='text-align: center;padding: 10px;font-size: 4mm'><b><t t-esc="receipt.floor.replace(' Floor', '')" /></b></div> -->
+                    <t>
+                        <div><t t-esc="datestringformat_1()"/></div>
+                    </t>
+                    <t>
+                        <div><t t-esc="datestringformat_2()"/></div>
+                    </t>
+                </div>
+                <div style='text-align: center;width: auto;padding: 10px;font-size: 5mm'>
+                    <b> Bar Order </b>
+                </div>
+                <div style='padding: 10px;line-height: 1.5'>
+                    <tr> CheckNo - <t t-esc="receipt.name"/></tr>
+                    <tr> Cashier - <t t-esc="receipt.cashier"/></tr>
+                    <tr> Table   - <t t-esc="receipt.table" /></tr>
+                </div>
+            </div>
+            <!-- Orderlines -->
+            <div class="orderlines">
+                <t t-name="BarOrderLinesReceipt" owl="1">
+                    <table  style="width: 100%">
+                        <t t-foreach="receipt.orderlines" t-as="line" t-key="line.id">
+                            <tr style='line-height: 1.6'>
+                                <td><t t-esc="line.product_name_wrapped" /></td>
+                                <td><t t-esc="line.quantity"/></td>
+                                <td>x</td>
+                            </tr>
+                        </t>
+                    </table>
+                </t>
+            </div>
+        </div>
+    </t>
+
+</templates>

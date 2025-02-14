@@ -1,0 +1,11 @@
+<templates id="template">
+    <t t-name="KitchenBillScreenExtend" t-inherit="km_pos_slip_kitchen_bar.KitchenBillScreen" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[@class='button print']" position="replace">
+            <div class="button print" t-on-click="sendReceiptToPrintNode">
+                <i class="fa fa-print"></i>
+                <span> </span>
+                <span> Print </span>
+            </div>
+        </xpath>
+    </t>
+</templates>

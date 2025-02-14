@@ -1,0 +1,2 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"access_generic_tag_all","generic_tag all","model_generic_tag",,1,0,0,0

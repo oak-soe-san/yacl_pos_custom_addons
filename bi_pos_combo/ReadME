@@ -1,0 +1,10 @@
+
+Version 16.0.0.1 (06/12/22)
+	- Solved issue into move line have changed field name product_uom_qty to reserved_uom_qty.
+Version 16.0.0.2 (18/04/23)
+	- Add customer not in pos receipt.
+
+Version 16.0.0.2 (15/06/23)
+	-- Customization
+		- Update css for the combo product popup and display two row for the combo products list.
+		- Added fucntionlaity of plus and minus product qty for the optional product and set limit to add combo porduct.

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="izel_pos_integration_action" model="ir.actions.act_window">
+        <field name="name">POS Integration</field>
+        <field name="res_model">izel.pos.integration</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No data yet!
+            </p>
+            <p>
+                Create a new POS order
+            </p>
+        </field>
+    </record>
+
+    <record id="izel_product_department_action" model="ir.actions.act_window">
+        <field name="name">Product Department</field>
+        <field name="res_model">izel.product.department</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No data yet!
+            </p>
+            <p>
+                Create a new department here.
+            </p>
+        </field>
+    </record>
+
+    <record id="izel_product_season_action" model="ir.actions.act_window">
+        <field name="name">Product Season</field>
+        <field name="res_model">izel.product.season</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No data yet!
+            </p>
+            <p>
+                Create a new season here.
+            </p>
+        </field>
+    </record>
+
+</odoo>

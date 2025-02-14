@@ -1,0 +1,14 @@
+.pos .product .int_reference {
+    box-sizing: border-box;
+    line-height: 14px;
+    overflow: hidden;
+        margin: 0.2rem 0.5rem 0 0.5rem;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    color: #a8a8a8;
+}
+
+.pos .product .product-name {
+    margin: 0.2rem 0.5rem;
+}

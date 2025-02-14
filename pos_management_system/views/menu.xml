@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Hourly Sale Report Root Menu -->
+    <menuitem id="hourly_sale_report_root_menu" name="Hourly Sale Report"
+        parent="point_of_sale.menu_point_rep"
+        sequence="10" />
+
+    <!-- Hourly Sale Report Sub Menu -->
+    <menuitem id="hourly_sale_report_menu" name="Hourly Sale Report"
+        parent="hourly_sale_report_root_menu"
+        action="hourly_sale_wizard_action" sequence="10" />
+
+    <!-- Shift Report Root Menu -->
+    <menuitem id="shift_report_root_menu" name="Shift Report"
+        parent="point_of_sale.menu_point_rep"
+        sequence="20" />
+
+    <!-- Shift Report Sub Menu -->
+    <menuitem id="shift_report_menu" name="Shift Report"
+        parent="shift_report_root_menu"
+        action="shift_report_wizard_action" sequence="10" />
+
+
+    <!-- Monthly Sale Report Root Menu -->
+    <menuitem id="monthly_sale_report_root_menu" name="Monthly Sale Report"
+        parent="point_of_sale.menu_point_rep"
+        sequence="30" />
+
+    <!-- Monthly Sale Report Sub Menu -->
+    <menuitem id="monthly_sale_report_menu" name="Monthly Sale Report"
+        parent="monthly_sale_report_root_menu"
+        action="monthly_sale_wizard_action" sequence="10" />
+
+    <!-- Sale Iteam Menu Group Report Root Menu -->
+    <menuitem id="sale_item_menu_group_report_root_menu" name="Sale Item Menu Group Report"
+        parent="point_of_sale.menu_point_rep"
+        sequence="40" />
+
+    <!-- Sale Iteam Menu Group Report Sub Menu -->
+    <menuitem id="sale_item_menu_group_report_menu" name="Sale Item Menu Group Report"
+        parent="sale_item_menu_group_report_root_menu"
+        action="sale_item_menu_group_report_wizard_action" sequence="10" />
+
+
+    <!-- POS Integration Report Root Menu -->
+    <menuitem
+        id="pos_integration_root_menu"
+        name="POS Integration"
+        parent="point_of_sale.menu_point_of_sale"
+        sequence="50" />
+
+    <!-- POS Integration Report Sub Menu -->
+    <menuitem
+        id="pos_integration_sub_menu"
+        name="POS Integration"
+        action="izel_pos_integration_action"
+        parent="pos_integration_root_menu"
+        sequence="10" />
+
+    <!-- Product Department Root Menu -->
+    <menuitem
+        id="product_department_root_menu"
+        name="Product Department"
+        parent="point_of_sale.menu_point_config_product"
+        sequence="50" />
+
+    <!-- Product Department Sub Menu -->
+    <menuitem
+        id="product_department_sub_menu"
+        name="Product Department"
+        action="izel_product_department_action"
+        parent="product_department_root_menu"
+        sequence="10" />
+    
+    <!-- Product Season Root Menu -->
+    <menuitem
+        id="product_season_root_menu"
+        name="Product Season"
+        parent="point_of_sale.menu_point_config_product"
+        sequence="60" />
+
+    <!-- Product Department Sub Menu -->
+    <menuitem
+        id="product_season_sub_menu"
+        name="Product Season"
+        action="izel_product_season_action"
+        parent="product_season_root_menu"
+        sequence="10" />
+</odoo>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="inventory_total_unit_cost_form_inherit" model="ir.ui.view">
+        <field name="name">inventory.total.unit.cost.form.inherit</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//form[1]/sheet[1]/group[1]" position="after">
+                <group name="other_information">
+                    <group name="discount_delivery_tax_nformation" string="Delivery Informaiton">
+                        <field name='tax_cost'
+                            widget="monetary"
+                            options="{'currency_field': 'currency_id', 'field_digits': True}" />
+                        <field name='delivery_cost'
+                            widget="monetary"
+                            options="{'currency_field': 'currency_id', 'field_digits': True}" />
+                        <field name='discount_cost'
+                            widget="monetary"
+                            options="{'currency_field': 'currency_id', 'field_digits': True}" />
+                        <field name="currency_id" invisible="1" />
+                    </group>
+                    <group name="total_cost_information" string="Total Amount">
+                        <field name='total_unit_cost' readonly="1" />
+                    </group>
+                </group>
+            </xpath>
+            <field name='quantity_done' position='before'>
+                <field name='inventory_cost' />
+            </field>
+            <field name='quantity_done' position='after'>
+                <field name='subtotal_cost' readonly="1" />
+            </field>
+        </field>
+    </record>
+
+
+    <record id="inventory_total_unit_cost_tree_inherit" model="ir.ui.view">
+        <field name="name">inventory.total.unit.cost.tree.inherit</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.vpicktree" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='state']" position="after">
+                <field name="total_unit_cost" optional="show" widget="monetary"
+                    options="{'currency_field': 'currency_id', 'field_digits': True}" />
+                <field name="currency_id" invisible="1" />
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

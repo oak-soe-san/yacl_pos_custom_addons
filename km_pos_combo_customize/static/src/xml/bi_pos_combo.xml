@@ -1,0 +1,25 @@
+<templates id="template">
+	<t t-name="SelectComboProductPopupWidget" t-inherit="bi_pos_combo.SelectComboProductPopupWidget" t-inherit-mode="extension" owl="1">
+		<xpath expr="//div[hasclass('product-img')]" position="inside">
+				<span class="remove-product" t-att-data-product-id="product.id" t-on-click.stop="renderElement">
+               <i class="fa fa-times"/>
+            </span>
+
+            <!-- <t t-log="product"> -->
+            <t t-if="product.combo_qty">
+					<span class="qty-label" t-att-fixed-qty="product.combo_qty" t-att-value="product.combo_qty" t-att-product-id="product.id" t-esc="product.combo_qty"/>
+				</t>
+				<t t-else="">
+					<span class="qty-label" t-att-fixed-qty="product.combo_qty" t-att-value="t-att-product-id" t-att-product-id="product.id">0</span>
+				</t>
+
+				<span class="plus-product" t-att-data-product-id="product.id" t-on-click.stop="plusQty">
+               <i class="fa fa-plus"/>
+            </span>
+
+            <span class="minus-product" t-att-data-product-id="product.id" t-on-click.stop="minusQtyRequired">
+               <i class="fa fa-minus"/>
+            </span>
+		</xpath>
+	</t>
+</templates>

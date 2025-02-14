@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Hourly Sale Report Template -->
+    <template id="pos_management_system.hourly_sale_report_template">
+
+        <t t-call="web.html_container">
+            <t t-call="web.html_container">
+                <div class="page">
+                    <div class="oe_structure">
+                        <div align="center"
+                            style="border:1px solid black;margin:0 auto;padding:0 auto;font-size:18px">
+                            <strong>Hourly Sale Report</strong>
+                        </div>
+                        <br />
+                        <table style="width:100%;margin-top:15px;">
+                            <tr>
+                                <td class="text-left">
+                                    Report On
+                                </td>
+                                <td align="right">
+                                    <span t-esc="report_date" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-left">
+                                    Start From
+                                </td>
+                                <td align="right">
+                                    <span t-esc="start_date" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-left">
+                                    End To
+                                </td>
+                                <td align="right">
+                                    <span t-esc="end_date" />
+                                </td>
+                            </tr>
+                            <!-- <tr>
+                                <td class="text-left">
+                                    User
+                                </td>
+                                <td align="right">
+                                    <span t-esc="user_id" />
+                                </td>
+                            </tr> -->
+                            <tr>
+                                <td class="text-left">
+                                    Employee
+                                </td>
+                                <td align="right">
+                                    <span t-esc="employee_id" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-left">
+                                    Session
+                                </td>
+                                <td align="right">
+                                    <span t-esc="session_id" />
+                                </td>
+                            </tr>
+                        </table>
+                        <t>
+                            <t t-set="sale_total_amount" t-value="0" />
+                            <div align="center" style="margin-top:10px !important;">
+
+                                <strong>Information</strong>
+
+                            </div>
+                            <table style="width:100%;margin-top:15px;">
+                                <tr>
+                                    <td style="width:50%; border-bottom:1pt dotted black;">
+                                        Time
+                                    </td>
+                                    <td align="center"
+                                        style="width:20%; border-bottom:1pt dotted black;">
+                                        Count
+                                    </td>
+                                    <td align="right"
+                                        style="width:30%; border-bottom:1pt dotted black;">
+                                        Amount
+                                    </td>
+                                </tr>
+                                <tr t-foreach="pos_orders.items()" t-as="orders">
+                                    <t t-set="sale_total_amount"
+                                        t-value="sale_total_amount + orders[1]['sale_amount']" />
+                                    <td class="text-left">
+                                        <span t-esc="orders[0]" />
+                                        <span> - </span>
+                                        <span t-esc="orders[1]['next_hour']" />
+                                    </td>
+                                    <td align="center">
+                                        <span t-esc="orders[1]['count']" />
+                                    </td>
+                                    <td align="right">
+                                        <span t-esc="orders[1]['sale_amount']"
+                                            t-options='{"widget": "float", "precision": 2}' />
+                                    </td>
+                                </tr>
+                            </table>
+                            <table style="width:100%;">
+                                <tr>
+                                    <td style="width:50%;">
+                                    </td>
+                                    <td style="width:50%; !important" align="right">
+                                        --------------
+                                    </td>
+                                </tr>
+                            </table>
+                            <table style="width:100%">
+                                <tr>
+                                    <td style="width:50%;" class="text-left">
+                                        Total Sale
+                                    </td>
+                                    <td style="width:50%; !important" align="right">
+                                        <span t-esc="sale_total_amount"
+                                            t-options='{"widget": "float", "precision": 2}' />
+                                    </td>
+                                </tr>
+                            </table>
+                        </t>
+                    </div>
+                </div>
+            </t>
+        </t>
+
+    </template>
+
+</odoo>

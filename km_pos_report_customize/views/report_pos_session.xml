@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="km_pos_report_customize.pos_z_report_pdf" inherit_id="pos_reports_omax.pos_z_report_pdf">
+        <xpath expr="//div[@class='page']/t[1]" position="after">
+
+            <t t-if="o.get_session_detail_combo_product_amount_data().get('products_sold')">
+                <t t-set="product_total" t-value="0" />
+                <t t-set="product_sale_total" t-value="0" />
+                <div align="center" style="margin-top:10px !important;">
+
+                    <strong>Combo Wise Sales</strong>
+
+                </div>
+                <table style="width:100%;margin-top:15px;">
+                    <tr>
+                        <td style="width:50%; border-bottom:1pt dotted black;">
+                            Product
+                        </td>
+                        <td align="center" style="width:20%; border-bottom:1pt dotted black;">
+                            Qty
+                        </td>
+                        <td align="right" style="width:30%; border-bottom:1pt dotted black;">
+                            Amount
+                        </td>
+                    </tr>
+
+                    <tr t-foreach="o.get_session_detail_combo_product_amount_data().get('products_sold').items()" t-as="l">
+                        <t t-set="product_total" t-value="product_total + l[1]['qty']" />
+                        <t t-set="product_sale_total" t-value="product_sale_total + l[1]['amount']" />
+                        <td class="text-left">
+                            <t t-if="l[0] == 'undefine'">
+                                Discount/Others
+                            </t>
+                            <t t-else="">
+                                <t t-if="l[1].get('barcode')">
+                                    <span t-esc="l[1]['barcode'] + ' - ' + l[0]" />
+                                </t>
+                                <t t-else="">
+                                    <span t-esc="l[0]" />
+                                </t>
+                            </t>
+                        </td>
+                        <td align="center">
+                            <span t-esc="l[1]['qty']" />
+                        </td>
+                        <td align="right">
+                            <span t-esc="l[1]['amount']" t-options='{"widget":"float", "precision":2}' />
+                        </td>
+                    </tr>
+
+                </table>
+                <table style="width:100%;">
+                    <tr>
+                        <td style="width:50%;">
+                        </td>
+                        <td style="width:50%; !important" align="right">
+                            --------------
+                        </td>
+                    </tr>
+                </table>
+                <table style="width:100%">
+                    <tr>
+                        <td style="width:50%;" class="text-left">
+                            Total
+                        </td>
+                        <td align="center" style="width:20%;">
+                            <span t-esc="product_total" />
+                        </td>
+                        <td align="right" style="width:30%;">
+                            <span t-esc="product_sale_total"
+                                t-options="{'widget': 'monetary', 'display_currency': o.currency_id}" />
+                        </td>
+                    </tr>
+                </table>
+            </t>
+
+        </xpath>
+    </template>
+</odoo>

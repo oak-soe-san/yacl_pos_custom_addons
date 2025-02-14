@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Monthly Sale Report Template -->
+    <template id="pos_management_system.monthly_sale_report_template">
+        <t t-call="web.html_container">
+            <t t-call="web.internal_layout">
+                <div class="page">
+                    <div class="oe_structure">
+                        <div class="text-center" style="front-weight:bold">
+                            <h4>
+                                <t t-esc="company_name" />
+ - MONTHLY SALE REPORT</h4>
+                        </div>
+                        <br />
+                        <div class="report-info" style="text-align: right;">
+                            <div>Report Issued Date: <t t-esc="issued_date" t-options='{"widget": "date", "date_format": "DD/MM/YYYY HH:mm:ss"}' />
+                            </div>
+                            <div>Start Date: <t t-esc="start_date" t-options='{"widget": "date", "date_format": "DD/MM/YYYY HH:mm:ss"}' />
+                            </div>
+                            <div>End Date: <t t-esc="end_date" t-options='{"widget": "date", "date_format": "DD/MM/YYYY HH:mm:ss"}' />
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col">
+                                <table class="table table-sm o_main_table">
+                                    <t t-set="tax_total" t-value="0" />
+                                    <t t-set="margin_total" t-value="0" />
+                                    <t t-set="sub_total_total" t-value="0" />
+
+                                    <t t-set="total_trans" t-value="0" />
+                                    <t t-set="total_rounding" t-value="0" />
+                                    <t t-set="total_disc_amt" t-value="0" />
+                                    <t t-set="total_disc_trans" t-value="0" />
+
+
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:center;font-weight:bold;">Date</th>
+                                            <th style="text-align:center;font-weight:bold;">Tax</th>
+                                            <th style="text-align:center;font-weight:bold;">Net
+                                                Total</th>
+                                            <th style="text-align:center;font-weight:bold;">Total</th>
+                                            <th style="text-align:center;font-weight:bold;">Trans</th>
+                                            <th style="text-align:center;font-weight:bold;">Rounding</th>
+                                            <th style="text-align:center;font-weight:bold;">
+                                                Disc-Amt</th>
+                                            <th style="text-align:center;font-weight:bold;">
+                                                Disc-Trans</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <t t-foreach="order_data['datas'].items()" t-as="date_info">
+                                            <tr>
+                                                <td name="date_info" class="text-center">
+                                                    <span t-esc="date_info[0]" t-options='{"widget": "date", "date_format": "DD/MM/YYYY HH:mm:ss"}' />
+                                                </td>
+                                                <td class="text-center">
+                                                    <span t-esc="date_info[1]['tax']" t-options='{"widget":"float", "precision":2}' />
+                                                </td>
+                                                <td class="text-center">
+                                                    <span t-esc="date_info[1]['margin']" t-options='{"widget":"float", "precision":2}' />
+                                                </td>
+                                                <td class="text-center">
+                                                    <span t-esc="date_info[1]['amount_paid']" t-options='{"widget":"float", "precision":2}' />
+                                                </td>
+                                                <td class="text-center">
+                                                    <span t-esc="date_info[1]['order_count']" />
+                                                </td>
+                                                <td class="text-center">
+                                                    <span t-esc="date_info[1]['rounding_amount']" t-options='{"widget":"float", "precision":2}' />
+                                                </td>
+                                                <td class="text-center">
+                                                    <span t-esc="date_info[1]['discount_amount']" t-options='{"widget":"float", "precision":2}' />
+                                                </td>
+                                                <td class="text-center">
+                                                    <span t-esc="date_info[1]['discount_trans_count']" />
+                                                </td>
+                                                <t t-set="tax_total" t-value="tax_total + date_info[1]['tax']" />
+                                                <t t-set="margin_total" t-value="margin_total + date_info[1]['margin']" />
+                                                <t t-set="sub_total_total" t-value="sub_total_total + date_info[1]['amount_paid']" />
+                                                <t t-set="total_trans" t-value="total_trans + date_info[1]['order_count']" />
+                                                <t t-set="total_rounding" t-value="total_rounding + date_info[1]['rounding_amount']" />
+                                                <t t-set="total_disc_amt" t-value="total_disc_amt + date_info[1]['discount_amount']" />
+                                                <t t-set="total_disc_trans" t-value="total_disc_trans + date_info[1]['discount_trans_count']" />
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                                <br />
+                                <table class="table table-sm o_main_table" style="width:100%">
+                                    <t>
+                                        <tr>
+                                            <td style="width:16.5%;font-weight:bold;" class="text-center">
+                                                Tax Total
+                                            </td>
+                                            <td align="right" style="width:16.5%;">
+                                                <span t-esc="tax_total" t-options='{"widget":"float", "precision":2}' />
+                                            </td>
+                                            <td style="width:16.5%;font-weight:bold;" class="text-center">
+                                                Net Total
+                                            </td>
+                                            <td align="right" style="width:16.5%;">
+                                                <span t-esc="margin_total" t-options='{"widget":"float", "precision":2}' />
+                                            </td>
+                                            <td style="width:16.5%;font-weight:bold;" class="text-center">
+                                                Total
+                                            </td>
+                                            <td align="right" style="width:16.5%;">
+                                                <span t-esc="sub_total_total" t-options='{"widget":"float", "precision":2}' />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width:16.5%;font-weight:bold;" class="text-center">
+                                                Total Trans
+                                            </td>
+                                            <td align="right" style="width:16.5%;">
+                                                <span t-esc="total_trans" />
+                                            </td>
+                                            <td style="width:16.5%;font-weight:bold;" class="text-center">
+                                                Total Rounding
+                                            </td>
+                                            <td align="right" style="width:16.5%;">
+                                                <span t-esc="total_rounding" t-options='{"widget":"float", "precision":2}'/>
+                                            </td>
+                                            <td style="width:16.5%;font-weight:bold;" class="text-center">
+                                                Total Discount Amt
+                                            </td>
+                                            <td align="right" style="width:16.5%;">
+                                                <span t-esc="total_disc_amt" t-options='{"widget":"float", "precision":2}' />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width:16.5%;font-weight:bold;" class="text-center">
+                                                Total Discount Trans
+                                            </td>
+                                            <td align="right" style="width:16.5%;">
+                                                <span t-esc="total_disc_trans" />
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+
+</odoo>

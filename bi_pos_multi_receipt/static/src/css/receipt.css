@@ -1,0 +1,22 @@
+.pos .pos-receipt-container > div {
+    text-align: left;
+    width: 300px;
+    background-color: white;
+    margin: 20px;
+    padding: 15px;
+    font-size: 16px;
+    padding-bottom:120px !important;
+    display: inline-block;
+    border: solid 1px rgb(220,220,220);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.pos-receipt .pos-receipt-logo {
+    width: 50%;
+    display: block;
+    margin: 0 auto;
+    padding-top: 60px;
+
+    padding-bottom: ;
+}

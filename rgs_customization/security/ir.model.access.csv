@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_rgs_brand,access_rgs_brand_model,model_rgs_brand,base.group_user,1,1,1,1
+access_rgs_gender,access_rgs_gender_model,model_rgs_gender,base.group_user,1,1,1,1

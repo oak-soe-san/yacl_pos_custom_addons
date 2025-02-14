@@ -1,0 +1,52 @@
+<odoo>
+        <record id="view_kitchen_bar_slip_form" model="ir.ui.view">
+            <field name="name">Kitchen and Bar Printers</field>
+            <field name="model">kitchen.bar.slip</field>
+            <field name="arch" type="xml">
+                <form string="POS Printer">
+                    <sheet>
+                        <group>
+                            <field name="name" />
+                            <field name="printer_type" />
+                            <field name="company_id" />
+                            <field name="product_categories_ids" />
+                            <field name="ip_address"/>
+                            <field name="active" widget="boolean_toggle"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_kitchen_bar_slip" model="ir.actions.act_window">
+            <field name="name">Kitchen and Bar Printers</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">kitchen.bar.slip</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">['|', ('active', '=', True), ('active', '=', False)]</field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Add a new kitchen and bar printers
+              </p>
+            </field>
+        </record>
+
+        <record id="view_kitchen_bar_slip_tree" model="ir.ui.view">
+            <field name="name">Kitchen and Bar Printers</field>
+            <field name="model">kitchen.bar.slip</field>
+            <field name="arch" type="xml">
+                <tree string="Kitchen and Bar Printers">
+                    <field name="name" />
+                    <field name="printer_type" />
+                    <field name="product_categories_ids" widget="many2many_tags"/>
+                    <field name="ip_address"/>
+                            <field name="active" widget="boolean_toggle"/>
+                </tree>
+            </field>
+        </record>
+
+        <menuitem id="menu_kitchen_bar_slip"
+            parent="point_of_sale.menu_point_config_product"
+            action="action_kitchen_bar_slip"
+            sequence="20" />
+</odoo>

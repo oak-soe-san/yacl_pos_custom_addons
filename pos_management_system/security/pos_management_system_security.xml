@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="izel_pos_product_category_multi_company_rule_id" model="ir.rule">
+        <field name="name">IZEL POS Product Category Multi Company Rule ID</field>
+        <field name="model_id" ref="model_pos_category" />
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in',
+            company_ids)]</field>
+    </record>
+
+    <record id="izel_pos_bill_multi_company_rule_id" model="ir.rule">
+        <field name="name">IZEL POS Bill Multi Company Rule ID</field>
+        <field name="model_id" ref="model_pos_bill" />
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in',
+            company_ids)]</field>
+    </record>
+
+    <record id="izel_pos_floor_multi_company_rule_id" model="ir.rule">
+        <field name="name">IZEL POS Floor Multi Company Rule ID</field>
+        <field name="model_id" ref="model_restaurant_floor" />
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in',
+            company_ids)]</field>
+    </record>
+
+    <record id="izel_product_department_rule_id" model="ir.rule">
+        <field name="name">IZEL Product Department Multi Company Rule ID</field>
+        <field name="model_id" ref="model_izel_product_department" />
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in',
+            company_ids)]</field>
+    </record>
+
+    <record id="izel_product_season_rule_id" model="ir.rule">
+        <field name="name">IZEL Product Season Multi Company Rule ID</field>
+        <field name="model_id" ref="model_izel_product_season" />
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in',
+            company_ids)]</field>
+    </record>
+
+    <record id="izel_pos_integration_rule_id" model="ir.rule">
+        <field name="name">IZEL POS Integration Multi Company Rule ID</field>
+        <field name="model_id" ref="model_izel_pos_integration" />
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in',
+            company_ids)]</field>
+    </record>
+</odoo>

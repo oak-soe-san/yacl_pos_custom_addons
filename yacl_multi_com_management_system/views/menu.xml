@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem
+        id="hr.menu_hr_root"
+        name="Employees"
+        groups="hr.group_hr_manager,point_of_sale.group_pos_manager"
+        web_icon="hr,static/description/icon.svg"
+        sequence="185" />
+
+    <!-- <menuitem
+        name="Inventoryssssssss"
+        id="stock.menu_stock_root"
+        sequence="140"
+        groups="stock.group_stock_manager"
+        web_icon="stock,static/description/icon.svg" /> -->
+
+    <record id="stock.menu_stock_root" model="ir.ui.menu">
+        <!-- <field name="name">Inventorysssssssssssss</field> -->
+        <field name="groups_id"
+            eval="[(4, ref('base.group_system')), (4, ref('stock.group_stock_manager'))]" />
+    </record>
+
+
+    <menuitem
+        name="Contacts"
+        id="contacts.menu_contacts"
+        sequence="20"
+        web_icon="contacts,static/description/icon.svg"
+        groups="base.group_system" />
+
+</odoo>

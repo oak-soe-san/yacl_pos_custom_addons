@@ -1,0 +1,294 @@
+<templates id="template" xml:space="preserve">
+    <t t-name="PartnerDetailsEdit"
+        t-inherit="point_of_sale.PartnerDetailsEdit"
+        t-inherit-mode="extension"
+        owl="1">
+
+        <xpath expr="//div[contains(@class, 'partner-details-left')]" position="replace">
+            <div t-if="env.pos.config.is_passport_scanner">
+                <div class="partner-details-left">
+                    <div class="partner-detail">
+                        <span class="label">Document</span>
+                        <input
+                            class="detail"
+                            name="document"
+                            t-on-change="captureChange"
+                            t-model="changes.document"
+                            placeholder="Document"
+                        />
+                    </div>
+
+                    <div class="partner-detail">
+                        <span class="label">Passport Number</span>
+                        <input
+                            class="detail"
+                            name="doc_number"
+                            t-on-change="captureChange"
+                            t-model="changes.doc_number"
+                            placeholder="Doc. Number"
+                        />
+                    </div>
+                    
+                    <div class="partner-detail">
+                        <span class="label">Flight Number</span>
+                        <input
+                            class="detail"
+                            name="flight_number"
+                            t-on-change="captureChange"
+                            t-model="changes.flight_number"
+                            placeholder="Flight Number"
+                        />
+                    </div>
+
+                    <div class="partner-detail">
+                        <span class="label">Flight Date</span>
+                        <input
+                            class="detail"
+                            name="flight_date"
+                            t-on-change="captureChange"
+                            t-model="changes.flight_date"
+                            placeholder="Flight Date"
+                        />
+                    </div>
+
+                    <div class="partner-detail partner-detail-pos-comment">
+                        <span class="label">Nationality</span>
+                        <input
+                            class="detail"
+                            name="nationality"
+                            t-on-change="captureChange"
+                            t-model="changes.nationality"
+                            placeholder="Nationality"
+                        />
+                    </div>
+
+                    <div class="partner-detail">
+                        <span class="label">Expiry Date</span>
+                        <input
+                            class="detail"
+                            name="expiry_date"
+                            t-on-change="captureChange"
+                            t-model="changes.expiry_date"
+                            placeholder="Expiry Date"
+                        />
+                    </div>
+                
+                    <div class="partner-detail">
+                        <span class="label">Issue Date</span>
+                        <input
+                            class="detail"
+                            name="issue_date"
+                            t-on-change="captureChange"
+                            t-model="changes.issue_date"
+                            placeholder="Issue Date"
+                        />
+                    </div>
+
+                    <div class="partner-detail">
+                        <span class="label">Gender</span>
+                        <select class="detail" name="gender" t-model="changes.gender" t-on-change="captureChange">
+                            <option value="">None</option>
+                            <t t-foreach="[{'id': 'male', 'name': 'Male'}, {'id': 'female', 'name': 'Female'}, {'id': 'other', 'name': 'Other'}]" t-as="gender" t-key="gender.id">
+                                <option t-att-value="gender.id">
+                                    <t t-esc="gender.name" />
+                                </option>
+                            </t>
+                        </select>
+                    </div>
+
+                    <div class="partner-detail">
+                        <span class="label">Date of Birth</span>
+                        <input
+                            class="detail"
+                            name="date_of_birth"
+                            t-on-change="captureChange"
+                            t-model="changes.date_of_birth"
+                            placeholder="Date of Birth"
+                        />
+                    </div>
+                    
+                </div>
+
+            </div>
+
+            <div t-else="">
+                <div class="partner-details-left">
+                    <div class="partner-detail">
+                        <span class="label">Street</span>
+                        <input class="detail" name="street"
+                            t-model="changes.street"
+                            t-on-change="captureChange" t-att-value="props.partner.street || ''"
+                            placeholder="Street" />
+                    </div>
+                    <div class="partner-detail">
+                        <span class="label">City</span>
+                        <input class="detail" name="city"
+                            t-model="changes.city"
+                            t-on-change="captureChange" t-att-value="props.partner.city || ''"
+                            placeholder="City" />
+                    </div>
+                    <div class="partner-detail">
+                        <span class="label">Postcode</span>
+                        <input class="detail" name="zip"
+                            t-model="changes.zip"
+                            t-on-change="captureChange" t-att-value="props.partner.zip || ''"
+                            placeholder="ZIP" />
+                    </div>
+                    <div class="partner-detail" t-if="env.pos.states.some((state) => state.country_id[0] == changes.country_id)">
+                        <span class="label">State</span>
+                        <select class="detail" name="state_id" t-model="changes.state_id" t-on-change="captureChange">
+                            <option value="">None</option>
+                            <t t-foreach="env.pos.states" t-as="state" t-key="state.id">
+                                <option t-if="changes.country_id == state.country_id[0]" t-att-value="state.id">
+                                    <t t-esc="state.name" />
+                                </option>
+                            </t>
+                        </select>
+                    </div>
+                    <div class="partner-detail">
+                        <span class="label">Country</span>
+                        <select class="detail" name="country_id" t-model="changes.country_id" t-on-change="captureChange">
+                            <option value="">None</option>
+                            <t t-foreach="env.pos.countries" t-as="country" t-key="country.id">
+                                <option t-att-value="country.id">
+                                    <t t-esc="country.name" />
+                                </option>
+                            </t>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+
+        <xpath expr="//select[@name='lang']/.." position="before">
+            <div t-if="env.pos.config.is_passport_scanner">
+                <div class="partner-detail">
+                    <span class="label">Street</span>
+                    <input class="detail" name="street" t-model="changes.street"
+                           t-on-change="captureChange"
+                           placeholder="Street" />
+                </div>
+                <div class="partner-detail">
+                    <span class="label">City</span>
+                    <input class="detail" name="city" t-model="changes.city"
+                           t-on-change="captureChange"
+                           placeholder="City" />
+                </div>
+                <div class="partner-detail">
+                    <span class="label">Postcode</span>
+                    <input class="detail" name="zip" t-model="changes.zip"
+                           t-on-change="captureChange"
+                           placeholder="ZIP" />
+                </div>
+                <div class="partner-detail" t-if="env.pos.states.some((state) => state.country_id[0] == changes.country_id)">
+                    <span class="label">State</span>
+                    <select class="detail" name="state_id" t-model="changes.state_id" t-on-change="captureChange">
+                        <option value="">None</option>
+                        <t t-foreach="env.pos.states" t-as="state" t-key="state.id">
+                            <option t-if="changes.country_id == state.country_id[0]" t-att-value="state.id">
+                                <t t-esc="state.name" />
+                            </option>
+                        </t>
+                    </select>
+                </div>
+                <div class="partner-detail">
+                    <span class="label">Country</span>
+                    <select class="detail" name="country_id" t-model="changes.country_id" t-on-change="captureChange">
+                        <option value="">None</option>
+                        <t t-foreach="env.pos.countries" t-as="country" t-key="country.id">
+                            <option t-att-value="country.id">
+                                <t t-esc="country.name" />
+                            </option>
+                        </t>
+                    </select>
+                </div>
+            </div>
+
+        </xpath>
+
+        <xpath expr="//input[@name='vat']/.." position="after">
+
+            <div t-if="env.pos.config.is_passport_scanner">
+                <div class="partner-detail">
+                    <span class="label">Surname</span>
+                    <input
+                        class="detail"
+                        name="surname"
+                        t-on-change="captureChange"
+                        t-model="changes.surname"
+                        placeholder="Surname"
+                    />
+                </div>
+
+                <div class="partner-detail">
+                    <span class="label">Forenames</span>
+                    <input
+                        class="detail"
+                        name="forenames"
+                        t-on-change="captureChange"
+                        t-model="changes.forenames"
+                        placeholder="Forenames"
+                    />
+                </div>
+
+                <div class="partner-detail">
+                    <span class="label">Issuing State</span>
+                    <input
+                        class="detail"
+                        name="issuing_state"
+                        t-on-change="captureChange"
+                        t-model="changes.issuing_state"
+                        placeholder="Issuing State"
+                    />
+                </div>
+
+                <div class="partner-detail">
+                    <span class="label">Height</span>
+                    <input
+                        class="detail"
+                        name="height"
+                        t-on-change="captureChange"
+                        t-model="changes.height"
+                        placeholder="Height"
+                    />
+                </div>
+
+                <div class="partner-detail">
+                    <span class="label">Weight</span>
+                    <input
+                        class="detail"
+                        name="weight"
+                        t-on-change="captureChange"
+                        t-model="changes.weight"
+                        placeholder="Height"
+                    />
+                </div>
+
+                <div class="partner-detail">
+                    <span class="label">Hair Color</span>
+                    <input
+                        class="detail"
+                        name="hair_color"
+                        t-on-change="captureChange"
+                        t-model="changes.hair_color"
+                        placeholder="Hair Color"
+                    />
+                </div>
+
+                <div class="partner-detail">
+                    <span class="label">Eye Color</span>
+                    <input
+                        class="detail"
+                        name="eye_color"
+                        t-on-change="captureChange"
+                        t-model="changes.eye_color"
+                        placeholder="Eye Color"
+                    />
+                </div>
+            </div>
+
+            
+        </xpath>
+    </t>
+
+</templates>

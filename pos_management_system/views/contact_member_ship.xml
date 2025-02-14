@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="izel_membership_id_inherit_view_id" model="ir.ui.view">
+        <field name="name">izel.membership.id.inherit.view.id</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/field[@name='title']" position="after">
+                <field name="barcode" string="Membership Code"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

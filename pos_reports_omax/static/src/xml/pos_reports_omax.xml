@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="Chrome" t-inherit="point_of_sale.Chrome" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('pos-branding')]" position="replace">
+            <div class="pos-branding">
+                <img t-if= "!env.isMobile" class="pos-logo" t-on-click="() => this.trigger('toggle-debug-widget')" t-attf-src="/web/binary/company_logo" alt="Logo" />
+                <CashMoveButton t-if="showCashMoveButton()" />
+                <TicketButton isTicketScreenShown="isTicketScreenShown" />
+            </div>
+        </xpath>
+    </t>
+    <t t-name="OrderReceipt" t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('pos-receipt-contact')]" position="replace">
+            <div class="pos-receipt-contact">
+                <div name="company_address" t-if="receipt.company.street || receipt.company.street2 || receipt.company.city || receipt.company.country_id || receipt.company.zip">
+                    <t t-if="receipt.company.street">
+                        <t t-esc="receipt.company.street"/>
+                        <br/>
+                    </t>
+                    <t t-if="receipt.company.street2">
+                        <t t-esc="receipt.company.street2"/>
+                        <br/>
+                    </t>
+                    <t t-if="receipt.company.city">
+                        <t t-esc="receipt.company.city"/>
+,</t>
+                    <t t-if="receipt.company.country_id">
+                        <t t-esc="receipt.company.country_id[1]"/>
+,</t>
+                    <t t-if="receipt.company.zip" t-esc="receipt.company.zip"/>
+                    <br/>
+                </div>
+                <t t-if="receipt.company.phone">
+                    <div>Tel:<t t-esc="receipt.company.phone" />
+                    </div>
+                </t>
+                <t t-if="receipt.company.vat">
+                    <div>
+                        <t t-esc="receipt.company.vat_label"/>
+:                        <t t-esc="receipt.company.vat" />
+                    </div>
+                </t>
+                <t t-if="receipt.company.email">
+                    <div>
+                        <t t-esc="receipt.company.email" />
+                    </div>
+                </t>
+                <t t-if="receipt.company.website">
+                    <div>
+                        <t t-esc="receipt.company.website" />
+                    </div>
+                </t>
+                <t t-if="receipt.header_html">
+                    <t t-raw="receipt.header_html" />
+                </t>
+                <t t-if="!receipt.header_html and receipt.header">
+                    <div>
+                        <t t-esc="receipt.header" />
+                    </div>
+                </t>
+                <t t-if="receipt.cashier">
+                    <div class="cashier">
+                        <div>--------------------------------</div>
+                        <div>Served by <t t-esc="receipt.cashier" />
+                        </div>
+                    </div>
+                </t>
+            </div>
+        </xpath>
+        <!-- <xpath expr="//div[hasclass('pos-receipt-order-data')]/div" position="replace">
+            <img id="pos_bar_code" t-att-src="receipt.pos_bar_code" class="pos-receipt-logo"/>
+            <div>
+                <t t-esc="receipt.name" />
+            </div>
+        </xpath> -->
+
+        <xpath expr="//div[@class='pos-receipt']/div[@class='pos-receipt-order-data']" position="replace">
+            <t t-if="env.pos.config.pos_pos_receipt">
+                <!-- <img id="pos_bar_code" t-att-src="receipt.pos_bar_code" class="pos-receipt-logo"/> -->
+                <div style="text-align: center; font-size: 12px;">
+                    <t t-esc="receipt.name" />
+                </div>
+                <t t-if="receipt.date.localestring">
+                    <div style="text-align: center; font-size: 12px;">
+                        <t t-esc="receipt.date.localestring" />
+                    </div>
+                </t>
+                <t t-else="">
+                    <div style="text-align: center; font-size: 12px;">
+                        <t t-esc="receipt.date.validation_date" />
+                    </div>
+                </t>
+            </t>
+        </xpath>
+
+
+        <xpath expr="//div[@class='pos-receipt']/div[@class='pos-receipt-center-align'][2]" position="replace">
+            <t t-if="env.pos.config.pos_pos_receipt">
+                <div style="text-align: center; font-size: 12px;">
+                    <t t-esc="receipt.footer" />
+                </div>
+            </t>
+        </xpath>
+    </t>
+
+    <t t-name="PosCustomRepButton" owl="1">
+        <span class="control-button" t-on-click="onClick">
+            <i class="fa fa-calculator"></i>
+            <span>Session Report</span>
+        </span>
+    </t>
+
+    <t t-name="PLSessionReportPrintButton" owl="1">
+        <span class='control-button' t-on-click="onClick">
+            <i class='fa fa-calculator' />
+            <span>P &amp; L Report</span>
+        </span>
+    </t>
+
+    <t t-name="SessionSummaryReportPrintButton" owl="1">
+        <span class='control-button' t-on-click="onClick">
+            <i class="fa fa-calculator"></i>
+            <span>Session Summary Report</span>
+        </span>
+    </t>
+
+</templates>
+    
+                                    

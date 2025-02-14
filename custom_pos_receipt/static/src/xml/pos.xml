@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="OrderReceipt" t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[@class='pos-receipt-contact']" position="inside">
+            <t t-if='receipt.client'>
+                <div>Client:
+                    <t t-esc='receipt.client.name' />
+                </div>
+            </t>
+            <div class="pos-receipt-order-data">
+                <div style="text-align: center; font-size: 12px;">
+                    <t t-esc="receipt.name" />
+                </div>
+                <t t-if="receipt.date.localestring">
+                    <div style="text-align: center; font-size: 12px;">
+                        <t t-esc="receipt.date.localestring" />
+                    </div>
+                </t>
+                <t t-else="">
+                    <div style="text-align: center; font-size: 12px;">
+                        <t t-esc="receipt.date.validation_date" />
+                    </div>
+                </t>
+            </div>
+            <br/>
+            <div class="pos_order_fiscal_position">
+                <t t-if='receipt.fiscal_position'>
+                    <div>Channel:
+                        <t t-esc='receipt.fiscal_position' />
+                    </div>
+                </t>
+            </div>
+        </xpath>
+
+
+        <!-- Default Resturant Order Receipt - Start -->
+        <xpath expr="//div[hasclass('pos-receipt-order-data')]" position="inside">
+            <t t-if="props.isBill">
+                <div>PRO FORMA</div>
+            </t>
+        </xpath>
+        <xpath expr="//div[hasclass('receipt-change')]" position="attributes">
+            <attribute name="t-if">!props.isBill</attribute>
+        </xpath>
+        <xpath expr="//div[hasclass('cashier')]" position="after">
+            <t t-if="receipt.table">
+                at table <t t-esc="receipt.table" />
+            </t>
+            <t t-if="receipt.table and receipt.customer_count">
+                <div>Guests: <t t-esc="receipt.customer_count" />
+                </div>
+            </t>
+        </xpath>
+        <xpath expr="//div[hasclass('before-footer')]" position="after">
+            <t t-if="props.isBill and env.pos.config.set_tip_after_payment">
+                <div class="tip-form">
+                    <div class="title">For convenience, we are providing the following gratuity calculations:</div>
+                    <div class="percentage-options">
+                        <div class="option">
+                            <div>15%</div>
+                            <div class="amount">
+                                <t t-esc="env.pos.format_currency(receipt.total_with_tax * 0.15)"></t>
+                            </div>
+                        </div>
+                        <div class="option">
+                            <div>20%</div>
+                            <div class="amount">
+                                <t t-esc="env.pos.format_currency(receipt.total_with_tax * 0.20)"></t>
+                            </div>
+                        </div>
+                        <div class="option">
+                            <div>25%</div>
+                            <div class="amount">
+                                <t t-esc="env.pos.format_currency(receipt.total_with_tax * 0.25)"></t>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </xpath>
+        <!-- Default Resturant Order Receipt - End -->
+    </t>
+
+
+
+    <!-- <t t-name="OrderLinesReceipt" t-inherit="point_of_sale.OrderLinesReceipt" t-inherit-mode="extension" owl="1"> -->
+    <!-- Internal Reference Order Receipt - Start  -->
+    <!-- t-name -> t-foreach -> t-if -> div class -> t-esc -->
+
+    <!-- <xpath expr="//t[@t-esc='line.product_name_wrapped[0]']" position="replace">
+            <t t-if="line.default_code">
+                <t t-esc="line.default_code + '-' + line.product_name_wrapped[0]" />
+            </t>
+            <t t-else="">
+                <t t-esc="line.product_name_wrapped[0]" />
+            </t>
+        </xpath>
+
+        <xpath expr="//div[@t-esc='line.product_name_wrapped[0]']" position="replace">
+            <t t-if="line.default_code">
+                <t t-esc="line.default_code + '-' + line.product_name_wrapped[0]" />
+            </t>
+            <t t-else="">
+                <t t-esc="line.product_name_wrapped[0]" />
+            </t>
+        </xpath> -->
+
+    <!-- Internal Reference Order Receipt - End  -->
+    <!-- </t> -->
+</templates>

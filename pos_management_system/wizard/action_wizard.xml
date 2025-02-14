@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="hourly_sale_wizard_action" model="ir.actions.act_window">
+        <field name="name">Hourly Sale Report</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hourly.sale.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="hourly_sale_wizard_form"/>
+        <field name="target">new</field>
+    </record>
+
+    <record id="shift_report_wizard_action" model="ir.actions.act_window">
+        <field name="name">Shift Report</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">shift.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="shift_report_wizard_form"/>
+        <field name="target">new</field>
+    </record>
+
+    <record id="monthly_sale_wizard_action" model="ir.actions.act_window">
+        <field name="name">Monthly Sale Report</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">monthly.sale.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="monthly_sale_report_wizard_form"/>
+        <field name="target">new</field>
+    </record>
+
+    <record id="sale_item_menu_group_report_wizard_action" model="ir.actions.act_window"> 
+        <field name="name">Sale Item Menu Group Report</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sale.item.menu.group.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="sale_item_menu_group_report_wizard_form"/>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

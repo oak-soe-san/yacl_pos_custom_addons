@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <record id="action_pos_payment_report" model="ir.actions.report">
+        <field name="name">Point Of Sale Payment Report</field>
+        <field name="model">pos.payment.report.wizard</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">pos_reports_omax.pos_payment_report</field>
+        <field name="report_file">pos_reports_omax.pos_payment_report</field>
+        <field name="binding_model_id" ref="model_pos_payment_report_wizard"/>
+        <field name="binding_type">report</field>
+    </record>
+    
+    <template id="pos_payment_report">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div class="oe_structure"/>
+                        <h2><center><strong>POS Payment Report</strong></center></h2>
+                        <div class="row justify-content-center mt-2 mb-2">
+                            <div class="col-6">
+                                <strong>Start Date :</strong>
+                                <span t-field="o.start_date" t-options='{"format": "dd/MM/yyyy"}'/>
+                            </div>
+                            <div class="col-6">
+                                <strong>End Date :</strong>
+                                <span t-field="o.end_date" t-options='{"format": "dd/MM/yyyy"}'/>
+                            </div>
+                        </div>
+                        <t t-set="payment_method" t-value="get_payment_method()"/>
+                        <t t-foreach="get_cashier_user()" t-as="user">
+                            <t t-set="value_exist" t-value="get_pos_orders_found(user, payment_method,company_id_lst,pos_config_ids_lst,start_date,end_date)"/>
+                            <t t-if="value_exist">
+                                <h5><center><strong>User : <span t-field="user.name"/></strong></center></h5>
+                            </t>
+                            <t t-foreach="get_payment_method()" t-as="payment_method">
+                                <t t-if="get_pos_orders(user, payment_method,company_id_lst,pos_config_ids_lst,start_date,end_date)">
+                                    <h5><center><strong>Payment Method : <span t-field="payment_method.name"/></strong></center></h5>
+                                    <table class="table table-sn mt20 mb20">
+                                        <thead>
+                                            <tr>
+                                                <th name="Date" class="text-center">Date</th>
+                                                <th name="Order" class="text-center">Order</th>
+                                                <th name="Session" class="text-center">Session</th>
+                                                <th name="Customer" class="text-center">Customer</th>
+                                                <th name="Amount" class="text-center">Amount</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <t t-set="main_total" t-value="0"/>
+                                            <t t-foreach="get_pos_orders(user, payment_method,company_id_lst,pos_config_ids_lst,start_date,end_date)" t-as="pos_orders">
+                                                <t t-foreach="pos_orders" t-as="pos_order">
+                                                    <tr>
+                                                        <td name="td_date" class="text-center"><span t-field="pos_order.date_order" t-options='{"format": "dd/MM/yyyy"}'/></td>
+                                                        <td name="td_Order" class="text-center"><span t-field="pos_order.name"/></td>
+                                                        <td name="td_Session" class="text-center"><span t-field="pos_order.session_id.name"/></td>
+                                                        <td name="td_Customer" class="text-center"><span t-field="pos_order.partner_id.name"/></td>
+                                                        <td name="td_Amount" class="text-center"><span t-field="pos_order.amount_paid"/></td>
+                                                        <t t-set="main_total" t-value="main_total + pos_order.amount_paid"/>
+                                                    </tr>
+                                                </t>
+                                            </t>
+                                        </tbody>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <th class="text-center">Total</th>
+                                        <th class="text-center"><span t-esc="round(main_total,2)"/></th>
+                                    </table>
+                                </t>
+                            </t>
+                        </t>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

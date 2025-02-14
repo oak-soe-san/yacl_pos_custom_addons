@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="StoreCopyReceipt" owl="1">
+        <div class="pos-receipt">
+            <div style="text-align: center;">
+                <p style="font-weight: bold; font-size: 7mm"> STORE COPY </p>
+            </div>
+
+            <table>
+                <tr>
+                    <td> RECEIPT: </td>
+                    <td>
+                        <span style="font-size: 15px; font-weight: bold;">
+                            <!-- <t t-esc = 'receipt.name.substring(12, 15)'/> -->
+                            <t t-esc='receipt.pos_order_ref' />
+                        </span>
+                    </td>
+                    <td> TRANS: </td>
+                    <td><t t-esc='receipt.name.replace("Order ","")'/></td>
+                </tr>
+
+                <tr>
+                    <td> CASHIER: </td>
+                    <td><t t-esc='receipt.cashier' /></td>
+                    <td/>
+                    <td/>
+                </tr>
+            </table>
+
+            <div style="float: right;">
+                <t t-if="receipt.date.localestring">
+                    <div><t t-esc="receipt.date.localestring" /></div>
+                </t>
+                <t t-else="">
+                    <div><t t-esc="receipt.date.validation_date" /></div>
+                </t>
+            </div>
+
+            <div> ----------------------------------------------------- </div>
+
+            <!-- Orderlines -->
+
+            <div class="orderlines">
+                <t t-call="OrderLinesReceipt"/>
+            </div>
+
+            <div> ----------------------------------------------------- </div>
+
+            <!-- Total -->
+
+            <div style="margin-left: 90px; font-size:17px;">
+                TOTAL (<t t-esc="env.pos.currency.name" />)
+                <span t-esc="env.pos.format_currency_no_symbol(receipt.total_with_tax)" class="pos-receipt-right-align" />
+            </div>
+
+            <t t-if="receipt.total_rounded != receipt.total_with_tax">
+                <div style="margin-left: 90px;">
+                  ROUNDING (<t t-esc="env.pos.currency.name" />)
+                <span t-esc='env.pos.format_currency_no_symbol(receipt.rounding_applied)' class="pos-receipt-right-align"/>
+                </div>
+                <div style="margin-left: 90px;">
+                  TO PAY (<t t-esc="env.pos.currency.name" />)
+                 <span t-esc='env.pos.format_currency_no_symbol(receipt.total_rounded)' class="pos-receipt-right-align"/>
+              </div>
+            </t>
+
+            <!-- Payment Lines -->
+
+            <t t-foreach="receipt.paymentlines" t-as="line" t-key="line.cid">
+                <!-- <div style="margin-left: 90px;">
+                    <t t-esc="line.name" /> (<t t-esc="env.pos.currency.name" />)
+                    <span t-esc="env.pos.format_currency_no_symbol(line.amount)" class="pos-receipt-right-align"/>
+                </div> -->
+
+                <div style="margin-left: 90px;">
+                    <t t-esc="line.name" />
+                    <t t-if="env.pos.config.multi_currency_payment and line.currency_amount_total">
+                        <t t-set="currency_symbol_with_name"
+                           t-value="' (' + line.selected_currency  + ')'" />
+                        <span t-esc="currency_symbol_with_name" />
+                        <span t-esc="env.pos.format_currency_no_symbol(line.currency_amount_total)"
+                            class=" pos-receipt-right-align" />
+                    </t>
+                     <t t-elif="env.pos.config.multi_currency_payment">
+                        <t t-set="currency_symbol_with_name"
+                           t-value="' (' + env.pos.currency.name  + ')'" />
+                        <span t-esc="currency_symbol_with_name" />
+                        <span t-esc="env.pos.format_currency_no_symbol(line.amount, env.pos.currency)"
+                            class="pos-receipt-right-align" />
+                    </t>
+                </div>
+            </t>
+
+            <div style="margin-left: 90px;">
+                CHANGE (<t t-esc="env.pos.currency.name" />)
+                <span t-esc="env.pos.format_currency_no_symbol(receipt.change)" class="pos-receipt-right-align"/>
+            </div>
+
+            <t t-if="receipt.total_discount">
+                <div style="margin-left: 90px;">
+                    DISCOUNTS (<t t-esc="env.pos.currency.name" />)
+                    <span t-esc="env.pos.format_currency_no_symbol(receipt.total_discount)" class="pos-receipt-right-align"/>
+                </div>
+            </t>
+
+            <!-- Extra Payment Info -->
+
+            <t t-if="isTaxIncluded">
+                <t t-foreach="receipt.tax_details" t-as="tax" t-key="tax.name">
+                    <div style="margin-left: 90px;">
+                        <t t-esc="tax.name" />
+                        <span t-esc="env.pos.format_currency_no_symbol(tax.amount)" class="pos-receipt-right-align"/>
+                    </div>
+                </t>
+            </t>
+
+        </div>
+    </t>
+
+    <t t-name="OrderLinesReceipt" owl="1">
+        <table>
+            <t t-foreach="receipt.orderlines" t-as="line" t-key="line.id">
+                <tr>
+                    <td>
+                        <span style="margin-right: 5px;" t-esc="line.quantity" />
+                    </td>
+
+                    <td>
+                        <span style="margin-right: 5px;">
+                            <t t-if="line.default_code">
+                                <t t-esc="line.default_code" />
+                            </t>
+                        </span>
+                    </td>
+
+                    <td>
+                        <t t-esc="line.product_name_wrapped[0]" />
+                    </td>
+
+                    <td>
+                        <span t-esc="env.pos.format_currency_no_symbol(line.price_display)" 
+                            class="price_display pos-receipt-right-align"/>
+                    </td>
+                    
+                </tr>
+            </t>
+        </table>
+    </t>
+
+</templates>
