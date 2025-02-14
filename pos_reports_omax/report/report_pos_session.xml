@@ -752,120 +752,120 @@
 
             <strong> Payment Detail </strong>
         </div>
-        <table style="width:100%;margin-top:15px;">
-            <t t-set="total" t-value="0" />
-            <t t-set="qty_payment_method" t-value="0" />
-            <tr>
-                <td style="width:50%; border-bottom:1pt dotted black;">
-                                Method
-                </td>
-                <td align="center" style="width:20%; border-bottom:1pt dotted black;">
-                                Qty
-                </td>
-                <td align="right" style="width:30%; border-bottom:1pt dotted black;">
-                                Amount
-                </td>
-            </tr>
-            <tr t-foreach="o.get_payment_data()" t-as="l">
+        <tr t-foreach="o.get_payment_data()" t-as="l">
                 <t t-if="l.get('selected_currency_symbol') == 'K'">
-                    <td class="text-left">
-                        <span t-esc="l.get('name')" />
-                    </td>
-                    <td align="center">
-                        <span t-esc="l.get('count')" />
-                    </td>
-                    <td align="right">
-                        <!-- <span t-esc="l.get('total')" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}" /> -->
-                        <span style="white-space: nowrap;">
-                            <t t-if="l.get('total') is not None">
-                                <span t-esc="l.get('total')" t-options="{'widget':'float', 'precision':2}" />
-                            </t>
-                            <span t-esc="l.get('selected_currency_symbol')" />
-                            <t t-if="l.get('total') is not None">
-                                <t t-set="total" t-value="total + l.get('total')" />
-                            </t>
-                        </span>
-                    </td>
-                </t>
-            </tr>
-        </table>
-        <table style="width:100%;">
-            <tr>
-                <td style="width:50%;"></td>
-                <td align="right" style="width:50%;">
-                                -------------------------------
-                </td>
-            </tr>
-        </table>
-        <table style="width:100%">
-            <t>
-                <tr>
-                    <td style="width:50%;" class="text-left">
-                                    Total
-                    </td>
-                    <td align="right" style="width:30%;">
-                        <span t-esc="total"/><span>K</span>
-                    </td>
-                </tr>
+                    <table style="width:100%;margin-top:15px;">
+                        <t t-set="total" t-value="0" />
+                        <t t-set="qty_payment_method" t-value="0" />
+
+                                    <tr>
+                                        <td style="width:50%; border-bottom:1pt dotted black;">
+                                                        Method
+                                        </td>
+                                        <td align="center" style="width:20%; border-bottom:1pt dotted black;">
+                                                        Qty
+                                        </td>
+                                        <td align="right" style="width:30%; border-bottom:1pt dotted black;">
+                                                        Amount
+                                        </td>
+                                    </tr>
+
+                                <td class="text-left">
+                                    <span t-esc="l.get('name')" />
+                                </td>
+                                <td align="center">
+                                    <span t-esc="l.get('count')" />
+                                </td>
+                                <td align="right">
+                                    <span style="white-space: nowrap;">
+                                        <t t-if="l.get('total') is not None">
+                                            <span t-esc="l.get('total')" t-options="{'widget':'float', 'precision':2}" />
+                                        </t>
+                                        <span t-esc="l.get('selected_currency_symbol')" />
+                                        <t t-if="l.get('total') is not None">
+                                            <t t-set="total" t-value="total + l.get('total')" />
+                                        </t>
+                                    </span>
+                                </td>
+                    </table>
+                    <table style="width:100%;">
+                        <tr>
+                            <td style="width:50%;"></td>
+                            <td align="right" style="width:50%;">
+                                            -------------------------------
+                            </td>
+                        </tr>
+                    </table>
+                    <table style="width:100%">
+                        <t>
+                            <tr>
+                                <td style="width:50%;" class="text-left">
+                                                Total
+                                </td>
+                                <td align="right" style="width:30%;">
+                                    <span t-esc="total"/><span>K</span>
+                                </td>
+                            </tr>
+                        </t>
+                    </table>
             </t>
-        </table>
-        <table style="width:100%;margin-top:15px;">
-            <t t-set="total" t-value="0" />
-            <t t-set="qty_payment_method" t-value="0" />
-            <tr>
-                <td style="width:50%; border-bottom:1pt dotted black;">
-                                Method
-                </td>
-                <td align="center" style="width:20%; border-bottom:1pt dotted black;">
-                                Qty
-                </td>
-                <td align="right" style="width:30%; border-bottom:1pt dotted black;">
-                                Amount
-                </td>
-            </tr>
-            <tr t-foreach="o.get_payment_data()" t-as="l">
-                <t t-if="l.get('selected_currency_symbol') == '$'">
-                    <td class="text-left">
-                        <span t-esc="l.get('name')" />
-                    </td>
-                    <td align="center">
-                        <span t-esc="l.get('count')" />
-                    </td>
-                    <td align="right">
-                        <!-- <span t-esc="l.get('total')" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}" /> -->
-                        <span style="white-space: nowrap;">
-                            <t t-if="l.get('total') is not None">
-                                <span t-esc="l.get('total')" t-options="{'widget':'float', 'precision':2}" />
-                            </t>
-                            <span t-esc="l.get('selected_currency_symbol')" />
-                            <t t-if="l.get('total') is not None">
-                                <t t-set="total" t-value="total + l.get('total')" />
-                            </t>
-                        </span>
-                    </td>
-                </t>
-            </tr>
-        </table>
-        <table style="width:100%;">
-            <tr>
-                <td style="width:50%;"></td>
-                <td align="right" style="width:50%;">
-                                -------------------------------
-                </td>
-            </tr>
-        </table>
-        <table style="width:100%">
-            <t>
-                <tr>
-                    <td style="width:50%;" class="text-left">
-                                    Total
-                    </td>
-                    <td align="right" style="width:30%;">
-                        <span t-esc="total" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}" />
-                    </td>
-                </tr>
+            <t t-if="l.get('selected_currency_symbol') == '$'">
+                    <table style="width:100%;margin-top:15px;">
+                        <t t-set="total" t-value="0" />
+                        <t t-set="qty_payment_method" t-value="0" />
+
+                                    <tr>
+                                        <td style="width:50%; border-bottom:1pt dotted black;">
+                                                        Method
+                                        </td>
+                                        <td align="center" style="width:20%; border-bottom:1pt dotted black;">
+                                                        Qty
+                                        </td>
+                                        <td align="right" style="width:30%; border-bottom:1pt dotted black;">
+                                                        Amount
+                                        </td>
+                                    </tr>
+
+                                <td class="text-left">
+                                    <span t-esc="l.get('name')" />
+                                </td>
+                                <td align="center">
+                                    <span t-esc="l.get('count')" />
+                                </td>
+                                <td align="right">
+                                    <span style="white-space: nowrap;">
+                                        <t t-if="l.get('total') is not None">
+                                            <span t-esc="l.get('total')" t-options="{'widget':'float', 'precision':2}" />
+                                        </t>
+                                        <span t-esc="l.get('selected_currency_symbol')" />
+                                        <t t-if="l.get('total') is not None">
+                                            <t t-set="total" t-value="total + l.get('total')" />
+                                        </t>
+                                    </span>
+                                </td>
+                    </table>
+                    <table style="width:100%;">
+                        <tr>
+                            <td style="width:50%;"></td>
+                            <td align="right" style="width:50%;">
+                                            -------------------------------
+                            </td>
+                        </tr>
+                    </table>
+                    <table style="width:100%">
+                        <t>
+                            <tr>
+                                <td style="width:50%;" class="text-left">
+                                                Total
+                                </td>
+                                <td align="right" style="width:30%;">
+                                    <span t-esc="total" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
+                                </td>
+                            </tr>
+                        </t>
+                    </table>
             </t>
-        </table>
+        </tr>
     </t>
     <br />
     <br />
