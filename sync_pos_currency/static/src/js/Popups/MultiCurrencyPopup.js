@@ -15,7 +15,7 @@ odoo.define('sync_pos_currency.MultiCurrencyPopup', function (require) {
             this.values = this.env.pos.multicurrencypayment
             this.selected_curr_name = this.values[0].name
             this.AmountTotal = this.env.pos.get_order().get_due()
-            this.selected_rate = this.values[0].rate.toFixed(2)
+            this.selected_rate = this.values[0].rate.toFixed(4)
             console.log("\n\n the selected rate", this.selected_rate, "\n\n")
             this.symbol = this.values[0].symbol
             this.amount_total_currency = (this.selected_rate * this.AmountTotal).toFixed(4)
@@ -28,7 +28,7 @@ odoo.define('sync_pos_currency.MultiCurrencyPopup', function (require) {
         getValues(event){
             this.selected_value = this.values.find((val) => val.id === parseFloat(event.target.value));
             this.selected_curr_name = this.selected_value.name;
-            this.selected_rate = this.selected_value.rate.toFixed(2)
+            this.selected_rate = this.selected_value.rate.toFixed(6)
             debugger;
             this.symbol = this.selected_value.symbol
             this.amount_total_currency = (this.selected_rate * this.AmountTotal).toFixed(4)
